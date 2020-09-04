@@ -1,0 +1,13 @@
+query GetAllKDramas {
+    kDrama {
+        _id
+        title
+    }
+}
+
+mutation AddKDrama($kDrama: KDramaInsertInput!) {
+  kDrama: insertOneKDrama(data:$kDrama) {
+    _id
+    title
+  }
+}

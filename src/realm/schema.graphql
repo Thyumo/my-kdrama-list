@@ -1,0 +1,134 @@
+type DeleteManyPayload {
+  deletedCount: Int!
+}
+
+type InsertManyPayload {
+  insertedIds: [ObjectId]!
+}
+
+type KDrama {
+  _id: ObjectId!
+  title: String!
+}
+
+input KDramaInsertInput {
+  _id: ObjectId
+  title: String!
+}
+
+input KDramaQueryInput {
+  _id_gte: ObjectId
+  _id: ObjectId
+  _id_lte: ObjectId
+  _id_exists: Boolean
+  _id_gt: ObjectId
+  _id_in: [ObjectId]
+  AND: [KDramaQueryInput!]
+  title_gte: String
+  OR: [KDramaQueryInput!]
+  _id_nin: [ObjectId]
+  title_nin: [String]
+  title_lt: String
+  _id_ne: ObjectId
+  _id_lt: ObjectId
+  title: String
+  title_in: [String]
+  title_lte: String
+  title_exists: Boolean
+  title_ne: String
+  title_gt: String
+}
+
+enum KDramaSortByInput {
+  _ID_ASC
+  _ID_DESC
+  TITLE_ASC
+  TITLE_DESC
+}
+
+input KDramaUpdateInput {
+  _id: ObjectId
+  _id_unset: Boolean
+  title: String
+  title_unset: Boolean
+}
+
+type Mutation {
+  deleteManyKDramas(query: KDramaQueryInput): DeleteManyPayload
+  deleteManyUsers(query: UserQueryInput): DeleteManyPayload
+  deleteOneKDrama(query: KDramaQueryInput!): KDrama
+  deleteOneUser(query: UserQueryInput!): User
+  insertManyKDramas(data: [KDramaInsertInput!]!): InsertManyPayload
+  insertManyUsers(data: [UserInsertInput!]!): InsertManyPayload
+  insertOneKDrama(data: KDramaInsertInput!): KDrama
+  insertOneUser(data: UserInsertInput!): User
+  replaceOneKDrama(query: KDramaQueryInput, data: KDramaInsertInput!): KDrama
+  replaceOneUser(query: UserQueryInput, data: UserInsertInput!): User
+  updateManyKDramas(query: KDramaQueryInput, set: KDramaUpdateInput!): UpdateManyPayload
+  updateManyUsers(query: UserQueryInput, set: UserUpdateInput!): UpdateManyPayload
+  updateOneKDrama(query: KDramaQueryInput, set: KDramaUpdateInput!): KDrama
+  updateOneUser(query: UserQueryInput, set: UserUpdateInput!): User
+  upsertOneKDrama(query: KDramaQueryInput, data: KDramaInsertInput!): KDrama
+  upsertOneUser(data: UserInsertInput!, query: UserQueryInput): User
+}
+
+scalar ObjectId
+
+type Query {
+  kDrama(query: KDramaQueryInput): KDrama
+  kDramas(query: KDramaQueryInput, limit: Int = 100, sortBy: KDramaSortByInput): [KDrama]!
+  user(query: UserQueryInput): User
+  users(query: UserQueryInput, limit: Int = 100, sortBy: UserSortByInput): [User]!
+}
+
+type UpdateManyPayload {
+  matchedCount: Int!
+  modifiedCount: Int!
+}
+
+type User {
+  _id: String!
+  name: String!
+}
+
+input UserInsertInput {
+  name: String!
+  _id: String
+}
+
+input UserQueryInput {
+  _id_lt: String
+  name_lte: String
+  _id_gte: String
+  name_gt: String
+  _id_exists: Boolean
+  _id: String
+  name_nin: [String]
+  _id_nin: [String]
+  _id_lte: String
+  OR: [UserQueryInput!]
+  name_lt: String
+  _id_ne: String
+  name_exists: Boolean
+  AND: [UserQueryInput!]
+  _id_in: [String]
+  _id_gt: String
+  name_ne: String
+  name: String
+  name_gte: String
+  name_in: [String]
+}
+
+enum UserSortByInput {
+  _ID_DESC
+  NAME_ASC
+  NAME_DESC
+  _ID_ASC
+}
+
+input UserUpdateInput {
+  _id: String
+  _id_unset: Boolean
+  name: String
+  name_unset: Boolean
+}

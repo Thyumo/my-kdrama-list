@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import RealmApp, { useRealmApp } from "./realm/RealmApp";
+import RealmApolloProvider from "./realm/RealmApolloProvider";
+import LoginScreen from "./components/LoginScreen";
+import Board from "./components/Board";
 
-function App() {
+const App: React.FC = (props) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RealmApp>
+      <RequireAuthentication />
+    </RealmApp>
+  );
+};
+export default App;
+
+function RequireAuthentication() {
+  const app = useRealmApp();
+  if (!app) {
+    return <div>Loading</div>;
+  }
+  return app.user ? (
+    <RealmApolloProvider>
+      <Board />
+    </RealmApolloProvider>
+  ) : (
+    <LoginScreen />
   );
 }
-
-export default App;
