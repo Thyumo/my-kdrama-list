@@ -91,6 +91,8 @@ const LoginScreen: React.FC = () => {
 						id="email"
 						label="Email"
 						value={email}
+						error={!!error.email}
+						helperText={error.email}
 						onChange={(e) => setEmail(e.target.value)}
 					/>
 					<TextField
@@ -100,6 +102,8 @@ const LoginScreen: React.FC = () => {
 						label="Password"
 						type="password"
 						value={password}
+						error={!!error.password}
+						helperText={error.password}
 						onChange={(e) => setPassword(e.target.value)}
 					/>
 					<Button
