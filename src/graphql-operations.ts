@@ -9,6 +9,8 @@ export const GetAllKDramasDocument = gql`
   kDramas {
     _id
     title
+    image
+    status
   }
 }
     `;
@@ -42,6 +44,8 @@ export const AddKDramaDocument = gql`
   kDrama: insertOneKDrama(data: $kDrama) {
     _id
     title
+    image
+    status
   }
 }
     `;
