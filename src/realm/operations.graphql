@@ -1,5 +1,5 @@
 query GetAllKDramas {
-    kDrama {
+    kDramas {
         _id
         title
     }

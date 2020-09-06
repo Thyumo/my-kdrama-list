@@ -268,10 +268,10 @@ export type GetAllKDramasQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllKDramasQuery = (
   { __typename?: 'Query' }
-  & { kDrama?: Maybe<(
+  & { kDramas: Array<Maybe<(
     { __typename?: 'KDrama' }
     & Pick<KDrama, '_id' | 'title'>
-  )> }
+  )>> }
 );
 
 export type AddKDramaMutationVariables = Exact<{

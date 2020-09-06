@@ -6,7 +6,7 @@ import * as ApolloReactHooks from '@apollo/client';
 
 export const GetAllKDramasDocument = gql`
     query GetAllKDramas {
-  kDrama {
+  kDramas {
     _id
     title
   }
