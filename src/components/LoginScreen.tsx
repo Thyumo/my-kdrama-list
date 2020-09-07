@@ -74,9 +74,10 @@ const LoginScreen: React.FC = () => {
 	return (
 		<Container>
 			<Paper
+				elevation={4}
 				style={{
-          paddingTop: "50px",
-          paddingBottom: "50px",
+					paddingTop: "100px",
+					paddingBottom: "100px",
 					marginTop: "200px",
 					display: "flex",
 					flexDirection: "column",
@@ -90,6 +91,7 @@ const LoginScreen: React.FC = () => {
 						fullWidth
 						id="email"
 						label="Email"
+						type="email"
 						value={email}
 						error={!!error.email}
 						helperText={error.email}
