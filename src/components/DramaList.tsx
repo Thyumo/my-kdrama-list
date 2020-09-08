@@ -20,16 +20,17 @@ const BigAvatar = styled(Avatar)({
 	width: 150,
 });
 
+const StyledGrid = styled(Grid)({
+	marginTop: 30,
+	marginBottom: 20,
+	width: 800,
+});
+
 const DramaList: React.FC<Props> = ({ list }) => {
 	return (
-		<Grid
-			style={{ marginTop: "20px", marginBottom: "20px" }}
-			container
-			direction="row"
-			justify="space-evenly"
-		>
+		<StyledGrid container direction="row" justify="space-evenly">
 			{list.map((kDrama) => (
-				<TitleTooltip title={kDrama.title}>
+				<TitleTooltip key={kDrama._id} title={kDrama.title}>
 					{kDrama.image ? (
 						<BigAvatar src={kDrama.image} />
 					) : (
@@ -39,7 +40,7 @@ const DramaList: React.FC<Props> = ({ list }) => {
 					)}
 				</TitleTooltip>
 			))}
-		</Grid>
+		</StyledGrid>
 	);
 };
 
