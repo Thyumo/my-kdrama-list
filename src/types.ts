@@ -316,3 +316,17 @@ export type AddKDramaMutation = (
     & Pick<KDrama, '_id' | 'title' | 'image' | 'status'>
   )> }
 );
+
+export type SetKDramaStatusMutationVariables = Exact<{
+  id: Scalars['ObjectId'];
+  status: Scalars['String'];
+}>;
+
+
+export type SetKDramaStatusMutation = (
+  { __typename?: 'Mutation' }
+  & { kDrama?: Maybe<(
+    { __typename?: 'KDrama' }
+    & Pick<KDrama, '_id' | 'title' | 'status'>
+  )> }
+);

@@ -1,17 +1,25 @@
 query GetAllKDramas {
-    kDramas {
-        _id
-        title
-        image
-        status
-    }
+	kDramas {
+		_id
+		title
+		image
+		status
+	}
 }
 
 mutation AddKDrama($kDrama: KDramaInsertInput!) {
-  kDrama: insertOneKDrama(data:$kDrama) {
+	kDrama: insertOneKDrama(data: $kDrama) {
+		_id
+		title
+		image
+		status
+	}
+}
+
+mutation SetKDramaStatus($id: ObjectId!, $status: String!) {
+  kDrama: updateOneKDrama(query: { _id: $id }, set: { status: $status } ) {
     _id
     title
-    image
     status
   }
 }
