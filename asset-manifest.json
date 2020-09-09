@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/my-kdrama-list/static/css/main.5ecd60fb.chunk.css",
+    "main.js": "/my-kdrama-list/static/js/main.6075bc85.chunk.js",
+    "main.js.map": "/my-kdrama-list/static/js/main.6075bc85.chunk.js.map",
+    "runtime-main.js": "/my-kdrama-list/static/js/runtime-main.172adaf8.js",
+    "runtime-main.js.map": "/my-kdrama-list/static/js/runtime-main.172adaf8.js.map",
+    "static/js/2.81a15587.chunk.js": "/my-kdrama-list/static/js/2.81a15587.chunk.js",
+    "static/js/2.81a15587.chunk.js.map": "/my-kdrama-list/static/js/2.81a15587.chunk.js.map",
+    "index.html": "/my-kdrama-list/index.html",
+    "precache-manifest.a30b9d1c0f966688848361e4336873c3.js": "/my-kdrama-list/precache-manifest.a30b9d1c0f966688848361e4336873c3.js",
+    "service-worker.js": "/my-kdrama-list/service-worker.js",
+    "static/css/main.5ecd60fb.chunk.css.map": "/my-kdrama-list/static/css/main.5ecd60fb.chunk.css.map",
+    "static/js/2.81a15587.chunk.js.LICENSE.txt": "/my-kdrama-list/static/js/2.81a15587.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.172adaf8.js",
+    "static/js/2.81a15587.chunk.js",
+    "static/css/main.5ecd60fb.chunk.css",
+    "static/js/main.6075bc85.chunk.js"
+  ]
+}
