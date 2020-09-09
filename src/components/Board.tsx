@@ -129,7 +129,7 @@ const Board: React.FC = () => {
 					.slice(0, 4)}
 				isLoading={loading}
 			/>
-			<FabGroup handleOpen={() => setIsOpen(true)} logOut={logOut} />
+			<FabGroup setFilter={setStatusFilter} handleOpen={() => setIsOpen(true)} logOut={logOut} />
 			<AddKDramaForm
 				addKDrama={handleSubmit}
 				handleClose={() => setIsOpen(false)}
