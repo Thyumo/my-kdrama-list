@@ -24,11 +24,13 @@ const AddKDramaForm: React.FC<Props> = ({ isOpen, handleClose, addKDrama }) => {
 	const [status, setStatus] = useState<string>(STATUSES.PLANNED);
 	const [title, setTitle] = useState<string>("");
 	const [image, setImage] = useState<string>("");
+	const [totalEpisodes, setTotalEpisodes] = useState<number>(0);
 
 	const inputData: KDramaInsertInput = {
 		title,
 		image,
 		status,
+		totalEpisodes,
 	};
 
 	return (
@@ -62,6 +64,13 @@ const AddKDramaForm: React.FC<Props> = ({ isOpen, handleClose, addKDrama }) => {
 					<MenuItem value={STATUSES.COMPLETED}>Completed</MenuItem>
 					<MenuItem value={STATUSES.PLANNED}>Planned</MenuItem>
 				</Select>
+				<TextField
+					value={totalEpisodes}
+					onChange={(e) => setTotalEpisodes(parseInt(e.target.value))}
+					type="number"
+					margin="dense"
+					label="Total Episodes"
+				/>
 				<Button
 					type="submit"
 					color="primary"
