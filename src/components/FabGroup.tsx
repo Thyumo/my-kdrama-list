@@ -20,6 +20,10 @@ const FabGroup: React.FC<Props> = ({ logOut, handleOpen, setFilter }) => {
 		setShowFilterList(false);
 	};
 
+	const toggleFilterList = () => {
+		setShowFilterList(!showFilterList);
+	};
+
 	return (
 		<>
 			<Fab
@@ -30,7 +34,7 @@ const FabGroup: React.FC<Props> = ({ logOut, handleOpen, setFilter }) => {
 					backgroundColor: "green",
 					color: "white",
 				}}
-				onClick={() => setShowFilterList(true)}
+				onClick={toggleFilterList}
 			>
 				<FilterIcon />
 			</Fab>
