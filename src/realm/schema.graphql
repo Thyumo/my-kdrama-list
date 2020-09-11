@@ -8,78 +8,110 @@ type InsertManyPayload {
 
 type KDrama {
   _id: ObjectId!
+  currentEpisode: Float
   image: String
   status: String!
   title: String!
+  totalEpisodes: Float!
 }
 
 input KDramaInsertInput {
+  status: String!
+  totalEpisodes: Float!
+  currentEpisode: Float
   _id: ObjectId
   title: String!
   image: String
-  status: String!
 }
 
 input KDramaQueryInput {
-  OR: [KDramaQueryInput!]
-  status_ne: String
-  AND: [KDramaQueryInput!]
-  image_lte: String
-  status_nin: [String]
-  title_ne: String
-  title: String
+  status_in: [String]
+  image_ne: String
+  _id: ObjectId
+  totalEpisodes_ne: Float
+  status_exists: Boolean
+  _id_lte: ObjectId
+  image_nin: [String]
+  title_nin: [String]
+  currentEpisode: Float
+  currentEpisode_lte: Float
+  status_lte: String
+  totalEpisodes_nin: [Float]
+  image_lt: String
+  image_gt: String
+  status_gt: String
+  currentEpisode_in: [Float]
   title_gt: String
   status_lt: String
-  title_gte: String
-  status_gte: String
   _id_ne: ObjectId
-  title_lte: String
-  status: String
-  _id_exists: Boolean
-  _id_gte: ObjectId
-  image_lt: String
-  image_in: [String]
-  title_lt: String
-  image: String
+  title: String
+  status_nin: [String]
+  status_gte: String
   image_gte: String
-  image_nin: [String]
-  _id_lte: ObjectId
+  _id_gte: ObjectId
   image_exists: Boolean
-  status_exists: Boolean
-  _id_in: [ObjectId]
-  status_in: [String]
-  _id_nin: [ObjectId]
-  image_ne: String
+  AND: [KDramaQueryInput!]
   title_exists: Boolean
-  title_in: [String]
-  status_gt: String
-  status_lte: String
-  title_nin: [String]
-  image_gt: String
-  _id: ObjectId
+  status_ne: String
+  totalEpisodes: Float
   _id_lt: ObjectId
+  _id_nin: [ObjectId]
+  title_lte: String
+  _id_in: [ObjectId]
+  currentEpisode_ne: Float
+  title_in: [String]
+  totalEpisodes_lte: Float
+  totalEpisodes_gt: Float
+  totalEpisodes_gte: Float
+  currentEpisode_gt: Float
   _id_gt: ObjectId
+  _id_exists: Boolean
+  status: String
+  currentEpisode_gte: Float
+  OR: [KDramaQueryInput!]
+  title_gte: String
+  title_lt: String
+  totalEpisodes_exists: Boolean
+  image_lte: String
+  currentEpisode_exists: Boolean
+  title_ne: String
+  currentEpisode_lt: Float
+  totalEpisodes_lt: Float
+  image_in: [String]
+  image: String
+  totalEpisodes_in: [Float]
+  currentEpisode_nin: [Float]
 }
 
 enum KDramaSortByInput {
-  TITLE_DESC
+  TOTALEPISODES_DESC
+  _ID_ASC
   IMAGE_ASC
   IMAGE_DESC
   STATUS_ASC
+  TITLE_DESC
   STATUS_DESC
-  _ID_ASC
+  TOTALEPISODES_ASC
+  CURRENTEPISODE_ASC
+  CURRENTEPISODE_DESC
   _ID_DESC
   TITLE_ASC
 }
 
 input KDramaUpdateInput {
-  image_unset: Boolean
-  status: String
-  status_unset: Boolean
-  _id: ObjectId
-  _id_unset: Boolean
-  title: String
   title_unset: Boolean
+  image_unset: Boolean
+  currentEpisode_inc: Float
+  currentEpisode: Float
+  status: String
+  totalEpisodes_inc: Float
+  totalEpisodes_unset: Boolean
+  status_unset: Boolean
+  _id_unset: Boolean
+  totalEpisodes: Float
+  title: String
+  _id: ObjectId
+  currentEpisode_unset: Boolean
   image: String
 }
 
@@ -96,10 +128,10 @@ type Mutation {
   replaceOneUser(query: UserQueryInput, data: UserInsertInput!): User
   updateManyKDramas(query: KDramaQueryInput, set: KDramaUpdateInput!): UpdateManyPayload
   updateManyUsers(query: UserQueryInput, set: UserUpdateInput!): UpdateManyPayload
-  updateOneKDrama(query: KDramaQueryInput, set: KDramaUpdateInput!): KDrama
+  updateOneKDrama(set: KDramaUpdateInput!, query: KDramaQueryInput): KDrama
   updateOneUser(query: UserQueryInput, set: UserUpdateInput!): User
   upsertOneKDrama(query: KDramaQueryInput, data: KDramaInsertInput!): KDrama
-  upsertOneUser(data: UserInsertInput!, query: UserQueryInput): User
+  upsertOneUser(query: UserQueryInput, data: UserInsertInput!): User
 }
 
 scalar ObjectId
@@ -122,31 +154,31 @@ type User {
 }
 
 input UserInsertInput {
-  name: String!
   _id: String
+  name: String!
 }
 
 input UserQueryInput {
+  _id_exists: Boolean
+  name_nin: [String]
   name_gte: String
+  _id_lte: String
+  name_ne: String
+  AND: [UserQueryInput!]
+  name_in: [String]
+  _id_gt: String
   name_exists: Boolean
+  OR: [UserQueryInput!]
   _id: String
   _id_nin: [String]
-  name_gt: String
-  AND: [UserQueryInput!]
-  name_lt: String
-  name_in: [String]
-  _id_lte: String
-  name_nin: [String]
-  _id_exists: Boolean
-  name: String
-  name_ne: String
-  OR: [UserQueryInput!]
   _id_ne: String
-  _id_in: [String]
-  name_lte: String
-  _id_gt: String
   _id_gte: String
+  name: String
+  _id_in: [String]
+  name_lt: String
   _id_lt: String
+  name_gt: String
+  name_lte: String
 }
 
 enum UserSortByInput {

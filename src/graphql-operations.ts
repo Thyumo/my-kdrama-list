@@ -11,6 +11,8 @@ export const GetAllKDramasDocument = gql`
     title
     image
     status
+    totalEpisodes
+    currentEpisode
   }
 }
     `;
@@ -46,6 +48,8 @@ export const AddKDramaDocument = gql`
     title
     image
     status
+    totalEpisodes
+    currentEpisode
   }
 }
     `;
