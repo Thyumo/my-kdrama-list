@@ -62,7 +62,6 @@ const Board: React.FC = () => {
 			const result = await setKDramaStatusMutation({
 				variables: { id, status },
 			});
-			console.log(result);
 			const updatedKDrama = result.data?.kDrama as KDrama;
 			currentKDramas[
 				currentKDramas.findIndex(({ _id }) => _id === updatedKDrama._id)
@@ -74,8 +73,8 @@ const Board: React.FC = () => {
 		}
 	};
 
-	const renderCardContent = () => {
-		if (loading) return <CircularProgress />;
+	const renderCard = () => {
+		if (loading) return <CircularProgress size={200} />;
 
 		const currentKDrama = kDramas.find(
 			({ status }) =>
@@ -88,46 +87,6 @@ const Board: React.FC = () => {
 			return <Typography variant="h2">No KDrama in Queue</Typography>;
 
 		return (
-			<CardContent style={{ padding: "0px" }}>
-				{currentKDrama?.image && (
-					<img width="800px" src={currentKDrama.image} alt="kdrama" />
-				)}
-				<Typography style={{ paddingLeft: "5px" }} variant="h4">
-					{isWatching ? "Currently watching:" : "Next planned:"}
-				</Typography>
-				<Typography style={{ paddingLeft: "5px" }} variant="h3">
-					{currentKDrama?.title ?? "No currently watched KDrama"}
-				</Typography>
-				<CardActions>
-					<Button
-						variant="outlined"
-						color="primary"
-						onClick={() =>
-							setStatus(
-								currentKDrama?._id,
-								isWatching ? STATUSES.COMPLETED : STATUSES.WATCHING
-							)
-						}
-					>
-						{isWatching ? "Complete" : "Start Watching"}
-					</Button>
-				</CardActions>
-			</CardContent>
-		);
-	};
-
-	return (
-		<Grid
-			style={{
-				background: "linear-gradient(90deg, rgba(174,229,238,1) 0%, rgba(75,160,255,1) 100%)",
-				height: "100vh",
-				borderRadius: "0% 0% 80% 0%"
-			}}
-			container
-			direction="column"
-			alignItems="center"
-			justify="space-evenly"
-		>
 			<Card
 				style={{
 					width: "800px",
@@ -135,8 +94,55 @@ const Board: React.FC = () => {
 				}}
 				elevation={5}
 			>
-				{renderCardContent()}
+				<CardContent style={{ padding: "0px" }}>
+					{currentKDrama?.image && (
+						<img width="800px" src={currentKDrama.image} alt="kdrama" />
+					)}
+					<Typography style={{ paddingLeft: "5px" }} variant="h4">
+						{isWatching ? "Currently watching:" : "Next planned:"}
+					</Typography>
+					<Typography
+						style={{ paddingLeft: "5px", fontWeight: "bold" }}
+						variant="h3"
+					>
+						{currentKDrama?.title ?? "No currently watched KDrama"}
+					</Typography>
+					<CardActions style={{ justifyContent: "space-between" }}>
+						<Button
+							variant="outlined"
+							color="primary"
+							onClick={() =>
+								setStatus(
+									currentKDrama?._id,
+									isWatching ? STATUSES.COMPLETED : STATUSES.WATCHING
+								)
+							}
+						>
+							{isWatching ? "Complete" : "Start Watching"}
+						</Button>
+						<Button variant="outlined" color="primary">
+							1/16
+						</Button>
+					</CardActions>
+				</CardContent>
 			</Card>
+		);
+	};
+
+	return (
+		<Grid
+			style={{
+				background:
+					"linear-gradient(130deg, rgba(174,229,238,1) 0%, rgba(75,160,255,1) 100%)",
+				height: "100vh",
+				borderRadius: "0% 0% 80% 0%",
+			}}
+			container
+			direction="column"
+			alignItems="center"
+			justify="space-evenly"
+		>
+			{renderCard()}
 			<KDramaList list={filteredKDramas.slice(0, 4)} isLoading={loading} />
 			<FabGroup
 				setFilter={setStatusFilter}
