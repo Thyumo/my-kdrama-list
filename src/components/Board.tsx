@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
 	Card,
 	CardContent,
@@ -25,6 +25,13 @@ const Board: React.FC = () => {
 	const [kDramas, setKDramas] = useState<KDrama[]>([]);
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [statusFilter, setStatusFilter] = useState<string | null>(null);
+	const filteredKDramas = useMemo(
+		() =>
+			kDramas.filter(({ status }) =>
+				statusFilter ? status === statusFilter : true
+			),
+		[statusFilter, kDramas]
+	);
 
 	const { logOut } = useRealmApp();
 	const [addKDramaMutation] = useAddKDramaMutation();
@@ -77,6 +84,9 @@ const Board: React.FC = () => {
 
 		const isWatching = currentKDrama?.status === STATUSES.WATCHING;
 
+		if (!currentKDrama)
+			return <Typography variant="h2">No KDrama in Queue</Typography>;
+
 		return (
 			<CardContent style={{ padding: "0px" }}>
 				{currentKDrama?.image && (
@@ -108,28 +118,31 @@ const Board: React.FC = () => {
 
 	return (
 		<Grid
+			style={{
+				background: "linear-gradient(90deg, rgba(174,229,238,1) 0%, rgba(75,160,255,1) 100%)",
+				height: "100vh",
+				borderRadius: "0% 0% 80% 0%"
+			}}
 			container
 			direction="column"
 			alignItems="center"
-			justify="space-between"
+			justify="space-evenly"
 		>
 			<Card
 				style={{
 					width: "800px",
 					marginTop: "50px",
 				}}
+				elevation={5}
 			>
 				{renderCardContent()}
 			</Card>
-			<KDramaList
-				list={kDramas
-					.filter(({ status }) =>
-						statusFilter ? status === statusFilter : true
-					)
-					.slice(0, 4)}
-				isLoading={loading}
+			<KDramaList list={filteredKDramas.slice(0, 4)} isLoading={loading} />
+			<FabGroup
+				setFilter={setStatusFilter}
+				handleOpen={() => setIsOpen(true)}
+				logOut={logOut}
 			/>
-			<FabGroup setFilter={setStatusFilter} handleOpen={() => setIsOpen(true)} logOut={logOut} />
 			<AddKDramaForm
 				addKDrama={handleSubmit}
 				handleClose={() => setIsOpen(false)}
