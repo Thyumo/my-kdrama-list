@@ -22,8 +22,33 @@ mutation AddKDrama($kDrama: KDramaInsertInput!) {
 
 mutation SetKDramaStatus($id: ObjectId!, $status: String!) {
   kDrama: updateOneKDrama(query: { _id: $id }, set: { status: $status } ) {
-    _id
-    title
-    status
+		_id
+		title
+		image
+		status
+		totalEpisodes
+		currentEpisode
   }
+}
+
+mutation StartKDrama($id: ObjectId!) {
+	kDrama: updateOneKDrama(query: { _id: $id }, set: { status: "watching", currentEpisode: 1 } ) {
+		_id
+		title
+		image
+		status
+		totalEpisodes
+		currentEpisode
+	}
+}
+
+mutation IncreaseEpisodes($id: ObjectId!, $counter: Float!) {
+	kDrama: updateOneKDrama(query: { _id: $id }, set: { currentEpisode: $counter } ) {
+		_id
+		title
+		image
+		status
+		totalEpisodes
+		currentEpisode
+	}
 }
