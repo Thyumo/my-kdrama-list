@@ -14,6 +14,7 @@ import {
 	useGetAllKDramasQuery,
 	useAddKDramaMutation,
 	useSetKDramaStatusMutation,
+	useIncreaseEpisodesMutation,
 } from "../graphql-operations";
 import { GetAllKDramasQuery, KDrama, KDramaInsertInput } from "../types";
 import { STATUSES } from "../Constants";
@@ -36,6 +37,7 @@ const Board: React.FC = () => {
 	const { logOut } = useRealmApp();
 	const [addKDramaMutation] = useAddKDramaMutation();
 	const [setKDramaStatusMutation] = useSetKDramaStatusMutation();
+	const [increaseEpisodesMutation] = useIncreaseEpisodesMutation();
 	const { loading } = useGetAllKDramasQuery({
 		onCompleted: (data: GetAllKDramasQuery) => {
 			if (data?.kDramas) {
@@ -53,6 +55,23 @@ const Board: React.FC = () => {
 		} catch (err) {
 			setKDramas(currentKDramas);
 			throw new Error("Couldn't add new KDrama");
+		}
+	};
+
+	const handleIncreaseEpisodes = async (id: string, current: number) => {
+		const currentKDramas = [...kDramas];
+		try {
+			const result = await increaseEpisodesMutation({
+				variables: { id, counter: current + 1 },
+			});
+			const updatedKDrama = result.data?.kDrama as KDrama;
+			currentKDramas[
+				currentKDramas.findIndex(({ _id }) => _id === updatedKDrama._id)
+			] = updatedKDrama;
+			setKDramas(currentKDramas);
+		} catch (err) {
+			setKDramas(currentKDramas);
+			throw new Error("Couldn't set status");
 		}
 	};
 
@@ -96,7 +115,7 @@ const Board: React.FC = () => {
 			>
 				<CardContent style={{ padding: "0px" }}>
 					{currentKDrama?.image && (
-						<img width="800px" src={currentKDrama.image} alt="kdrama" />
+						<img style={{ objectFit: "cover" }} width="800px" height="450px" src={currentKDrama.image} alt="kdrama" />
 					)}
 					<Typography style={{ paddingLeft: "5px" }} variant="h4">
 						{isWatching ? "Currently watching:" : "Next planned:"}
@@ -120,8 +139,19 @@ const Board: React.FC = () => {
 						>
 							{isWatching ? "Complete" : "Start Watching"}
 						</Button>
-						<Button variant="outlined" color="primary">
-							1/16
+						<Button
+							onClick={() =>
+								handleIncreaseEpisodes(
+									currentKDrama._id,
+									currentKDrama.currentEpisode || 0
+								)
+							}
+							variant="outlined"
+							color="primary"
+						>
+							{`${currentKDrama.currentEpisode ?? "0"}/${
+								currentKDrama.totalEpisodes
+							}`}
 						</Button>
 					</CardActions>
 				</CardContent>

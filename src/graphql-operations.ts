@@ -83,7 +83,10 @@ export const SetKDramaStatusDocument = gql`
   kDrama: updateOneKDrama(query: {_id: $id}, set: {status: $status}) {
     _id
     title
+    image
     status
+    totalEpisodes
+    currentEpisode
   }
 }
     `;
@@ -113,3 +116,78 @@ export function useSetKDramaStatusMutation(baseOptions?: ApolloReactHooks.Mutati
 export type SetKDramaStatusMutationHookResult = ReturnType<typeof useSetKDramaStatusMutation>;
 export type SetKDramaStatusMutationResult = ApolloReactCommon.MutationResult<Types.SetKDramaStatusMutation>;
 export type SetKDramaStatusMutationOptions = ApolloReactCommon.BaseMutationOptions<Types.SetKDramaStatusMutation, Types.SetKDramaStatusMutationVariables>;
+export const StartKDramaDocument = gql`
+    mutation StartKDrama($id: ObjectId!) {
+  kDrama: updateOneKDrama(query: {_id: $id}, set: {status: "watching", currentEpisode: 1}) {
+    _id
+    title
+    image
+    status
+    totalEpisodes
+    currentEpisode
+  }
+}
+    `;
+export type StartKDramaMutationFn = ApolloReactCommon.MutationFunction<Types.StartKDramaMutation, Types.StartKDramaMutationVariables>;
+
+/**
+ * __useStartKDramaMutation__
+ *
+ * To run a mutation, you first call `useStartKDramaMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useStartKDramaMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [startKDramaMutation, { data, loading, error }] = useStartKDramaMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useStartKDramaMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.StartKDramaMutation, Types.StartKDramaMutationVariables>) {
+        return ApolloReactHooks.useMutation<Types.StartKDramaMutation, Types.StartKDramaMutationVariables>(StartKDramaDocument, baseOptions);
+      }
+export type StartKDramaMutationHookResult = ReturnType<typeof useStartKDramaMutation>;
+export type StartKDramaMutationResult = ApolloReactCommon.MutationResult<Types.StartKDramaMutation>;
+export type StartKDramaMutationOptions = ApolloReactCommon.BaseMutationOptions<Types.StartKDramaMutation, Types.StartKDramaMutationVariables>;
+export const IncreaseEpisodesDocument = gql`
+    mutation IncreaseEpisodes($id: ObjectId!, $counter: Float!) {
+  kDrama: updateOneKDrama(query: {_id: $id}, set: {currentEpisode: $counter}) {
+    _id
+    title
+    image
+    status
+    totalEpisodes
+    currentEpisode
+  }
+}
+    `;
+export type IncreaseEpisodesMutationFn = ApolloReactCommon.MutationFunction<Types.IncreaseEpisodesMutation, Types.IncreaseEpisodesMutationVariables>;
+
+/**
+ * __useIncreaseEpisodesMutation__
+ *
+ * To run a mutation, you first call `useIncreaseEpisodesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useIncreaseEpisodesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [increaseEpisodesMutation, { data, loading, error }] = useIncreaseEpisodesMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      counter: // value for 'counter'
+ *   },
+ * });
+ */
+export function useIncreaseEpisodesMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.IncreaseEpisodesMutation, Types.IncreaseEpisodesMutationVariables>) {
+        return ApolloReactHooks.useMutation<Types.IncreaseEpisodesMutation, Types.IncreaseEpisodesMutationVariables>(IncreaseEpisodesDocument, baseOptions);
+      }
+export type IncreaseEpisodesMutationHookResult = ReturnType<typeof useIncreaseEpisodesMutation>;
+export type IncreaseEpisodesMutationResult = ApolloReactCommon.MutationResult<Types.IncreaseEpisodesMutation>;
+export type IncreaseEpisodesMutationOptions = ApolloReactCommon.BaseMutationOptions<Types.IncreaseEpisodesMutation, Types.IncreaseEpisodesMutationVariables>;

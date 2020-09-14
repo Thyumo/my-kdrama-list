@@ -359,6 +359,33 @@ export type SetKDramaStatusMutation = (
   { __typename?: 'Mutation' }
   & { kDrama?: Maybe<(
     { __typename?: 'KDrama' }
-    & Pick<KDrama, '_id' | 'title' | 'status'>
+    & Pick<KDrama, '_id' | 'title' | 'image' | 'status' | 'totalEpisodes' | 'currentEpisode'>
+  )> }
+);
+
+export type StartKDramaMutationVariables = Exact<{
+  id: Scalars['ObjectId'];
+}>;
+
+
+export type StartKDramaMutation = (
+  { __typename?: 'Mutation' }
+  & { kDrama?: Maybe<(
+    { __typename?: 'KDrama' }
+    & Pick<KDrama, '_id' | 'title' | 'image' | 'status' | 'totalEpisodes' | 'currentEpisode'>
+  )> }
+);
+
+export type IncreaseEpisodesMutationVariables = Exact<{
+  id: Scalars['ObjectId'];
+  counter: Scalars['Float'];
+}>;
+
+
+export type IncreaseEpisodesMutation = (
+  { __typename?: 'Mutation' }
+  & { kDrama?: Maybe<(
+    { __typename?: 'KDrama' }
+    & Pick<KDrama, '_id' | 'title' | 'image' | 'status' | 'totalEpisodes' | 'currentEpisode'>
   )> }
 );
