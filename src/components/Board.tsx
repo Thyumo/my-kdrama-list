@@ -1,13 +1,5 @@
-import React, { useState, useMemo } from "react";
-import {
-	Card,
-	CardContent,
-	Typography,
-	CircularProgress,
-	Grid,
-	Button,
-	CardActions,
-} from "@material-ui/core";
+import React, { useState, useMemo, useCallback } from "react";
+import { Typography, CircularProgress, Grid } from "@material-ui/core";
 
 import { useRealmApp } from "../realm/RealmApp";
 import {
@@ -19,11 +11,16 @@ import {
 import { GetAllKDramasQuery, KDrama, KDramaInsertInput } from "../types";
 import { STATUSES } from "../Constants";
 import KDramaList from "./DramaList";
+import MainCard from "./MainCard";
 import FabGroup from "./FabGroup";
 import AddKDramaForm from "./AddKDramaForm";
 
 const Board: React.FC = () => {
 	const [kDramas, setKDramas] = useState<KDrama[]>([]);
+	const watchedKDrama = kDramas.find(
+		({ status }) => status === STATUSES.WATCHING || status === STATUSES.PLANNED
+	);
+	const [displayedKDrama, setDisplayedKDrama] = useState<KDrama | undefined>();
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [statusFilter, setStatusFilter] = useState<string | null>(null);
 	const filteredKDramas = useMemo(
@@ -58,106 +55,60 @@ const Board: React.FC = () => {
 		}
 	};
 
-	const handleIncreaseEpisodes = async (id: string, current: number) => {
-		const currentKDramas = [...kDramas];
-		try {
-			const result = await increaseEpisodesMutation({
-				variables: { id, counter: current + 1 },
-			});
-			const updatedKDrama = result.data?.kDrama as KDrama;
-			currentKDramas[
-				currentKDramas.findIndex(({ _id }) => _id === updatedKDrama._id)
-			] = updatedKDrama;
-			setKDramas(currentKDramas);
-		} catch (err) {
-			setKDramas(currentKDramas);
-			throw new Error("Couldn't set status");
-		}
-	};
+	const increaseEpisodes = useCallback(
+		async (id: string, current: number) => {
+			const currentKDramas = [...kDramas];
+			try {
+				const result = await increaseEpisodesMutation({
+					variables: { id, counter: current + 1 },
+				});
+				const updatedKDrama = result.data?.kDrama as KDrama;
+				currentKDramas[
+					currentKDramas.findIndex(({ _id }) => _id === updatedKDrama._id)
+				] = updatedKDrama;
+				setKDramas(currentKDramas);
+			} catch (err) {
+				setKDramas(currentKDramas);
+				throw new Error("Couldn't increase episodes");
+			}
+		},
+		[kDramas, increaseEpisodesMutation]
+	);
 
-	const setStatus = async (id: string, status: string) => {
-		const currentKDramas = [...kDramas];
-		try {
-			const result = await setKDramaStatusMutation({
-				variables: { id, status },
-			});
-			const updatedKDrama = result.data?.kDrama as KDrama;
-			currentKDramas[
-				currentKDramas.findIndex(({ _id }) => _id === updatedKDrama._id)
-			] = updatedKDrama;
-			setKDramas(currentKDramas);
-		} catch (err) {
-			setKDramas(currentKDramas);
-			throw new Error("Couldn't set status");
-		}
-	};
+	const setStatus = useCallback(
+		async (id: string, status: string) => {
+			const currentKDramas = [...kDramas];
+			try {
+				const result = await setKDramaStatusMutation({
+					variables: { id, status },
+				});
+				const updatedKDrama = result.data?.kDrama as KDrama;
+				currentKDramas[
+					currentKDramas.findIndex(({ _id }) => _id === updatedKDrama._id)
+				] = updatedKDrama;
+				setKDramas(currentKDramas);
+			} catch (err) {
+				setKDramas(currentKDramas);
+				throw new Error("Couldn't set status");
+			}
+		},
+		[kDramas, setKDramaStatusMutation]
+	);
 
-	const renderCard = () => {
+	const renderCard = useCallback(() => {
 		if (loading) return <CircularProgress size={200} />;
 
-		const currentKDrama = kDramas.find(
-			({ status }) =>
-				status === STATUSES.WATCHING || status === STATUSES.PLANNED
-		);
-
-		const isWatching = currentKDrama?.status === STATUSES.WATCHING;
-
-		if (!currentKDrama)
+		if (!(watchedKDrama || displayedKDrama))
 			return <Typography variant="h2">No KDrama in Queue</Typography>;
 
 		return (
-			<Card
-				style={{
-					width: "800px",
-					marginTop: "50px",
-				}}
-				elevation={5}
-			>
-				<CardContent style={{ padding: "0px" }}>
-					{currentKDrama?.image && (
-						<img style={{ objectFit: "cover" }} width="800px" height="450px" src={currentKDrama.image} alt="kdrama" />
-					)}
-					<Typography style={{ paddingLeft: "5px" }} variant="h4">
-						{isWatching ? "Currently watching:" : "Next planned:"}
-					</Typography>
-					<Typography
-						style={{ paddingLeft: "5px", fontWeight: "bold" }}
-						variant="h3"
-					>
-						{currentKDrama?.title ?? "No currently watched KDrama"}
-					</Typography>
-					<CardActions style={{ justifyContent: "space-between" }}>
-						<Button
-							variant="outlined"
-							color="primary"
-							onClick={() =>
-								setStatus(
-									currentKDrama?._id,
-									isWatching ? STATUSES.COMPLETED : STATUSES.WATCHING
-								)
-							}
-						>
-							{isWatching ? "Complete" : "Start Watching"}
-						</Button>
-						<Button
-							onClick={() =>
-								handleIncreaseEpisodes(
-									currentKDrama._id,
-									currentKDrama.currentEpisode || 0
-								)
-							}
-							variant="outlined"
-							color="primary"
-						>
-							{`${currentKDrama.currentEpisode ?? "0"}/${
-								currentKDrama.totalEpisodes
-							}`}
-						</Button>
-					</CardActions>
-				</CardContent>
-			</Card>
+			<MainCard
+				kDrama={displayedKDrama || watchedKDrama!}
+				setStatus={setStatus}
+				increaseEpisodes={increaseEpisodes}
+			/>
 		);
-	};
+	}, [loading, watchedKDrama, displayedKDrama, setStatus, increaseEpisodes]);
 
 	return (
 		<Grid
