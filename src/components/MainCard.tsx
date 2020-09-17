@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 
 import { KDrama } from "../types";
-import { STATUSES } from "../Constants";
+import { STATUSES, ACTIONS } from "../Constants";
 
 interface Props {
 	kDrama: KDrama;
@@ -57,7 +57,7 @@ const MainCard: React.FC<Props> = ({ kDrama, increaseEpisodes, setStatus }) => {
 							)
 						}
 					>
-						{isWatching ? "Complete" : "Start Watching"}
+						{ACTIONS[kDrama.status]}
 					</Button>
 					<Button
 						onClick={() =>
