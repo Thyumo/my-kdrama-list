@@ -124,7 +124,7 @@ const Board: React.FC = () => {
 			justify="space-evenly"
 		>
 			{renderCard()}
-			<KDramaList list={filteredKDramas.slice(0, 4)} isLoading={loading} />
+			<KDramaList setDisplayedKDrama={setDisplayedKDrama} list={filteredKDramas.slice(0, 4)} isLoading={loading} />
 			<FabGroup
 				setFilter={setStatusFilter}
 				handleOpen={() => setIsOpen(true)}

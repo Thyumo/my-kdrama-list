@@ -6,6 +6,7 @@ import { KDrama } from "../types";
 
 interface Props {
 	list: KDrama[];
+	setDisplayedKDrama: (kDrama: KDrama) => void;
 	isLoading: boolean;
 }
 
@@ -26,13 +27,17 @@ const StyledGrid = styled(Grid)({
 	width: 800,
 });
 
-const DramaList: React.FC<Props> = ({ list }) => {
+const DramaList: React.FC<Props> = ({ list, setDisplayedKDrama }) => {
+	const handleClick = (kDrama: KDrama) => {
+		setDisplayedKDrama(kDrama);
+	}
+
 	return (
 		<StyledGrid container direction="row" justify="space-evenly">
 			{list.map((kDrama) => (
 				<TitleTooltip key={kDrama._id} title={kDrama.title}>
 					{kDrama.image ? (
-						<BigAvatar src={kDrama.image} />
+						<BigAvatar onClick={() => handleClick(kDrama)} src={kDrama.image} />
 					) : (
 						<BigAvatar>
 							<QuestionMarkIcon style={{ fontSize: "150px" }} />
