@@ -6,7 +6,7 @@ import {
 	useGetAllKDramasQuery,
 	useAddKDramaMutation,
 	useSetKDramaStatusMutation,
-	useIncreaseEpisodesMutation,
+	useSetEpisodesMutation,
 } from "../graphql-operations";
 import { GetAllKDramasQuery, KDrama, KDramaInsertInput } from "../types";
 import { STATUSES } from "../Constants";
@@ -34,7 +34,7 @@ const Board: React.FC = () => {
 	const { logOut } = useRealmApp();
 	const [addKDramaMutation] = useAddKDramaMutation();
 	const [setKDramaStatusMutation] = useSetKDramaStatusMutation();
-	const [increaseEpisodesMutation] = useIncreaseEpisodesMutation();
+	const [setEpisodesMutation] = useSetEpisodesMutation();
 	const { loading } = useGetAllKDramasQuery({
 		onCompleted: (data: GetAllKDramasQuery) => {
 			if (data?.kDramas) {
@@ -55,12 +55,12 @@ const Board: React.FC = () => {
 		}
 	};
 
-	const increaseEpisodes = useCallback(
+	const setEpisodes = useCallback(
 		async (id: string, current: number) => {
 			const currentKDramas = [...kDramas];
 			try {
-				const result = await increaseEpisodesMutation({
-					variables: { id, counter: current + 1 },
+				const result = await setEpisodesMutation({
+					variables: { id, counter: current },
 				});
 				const updatedKDrama = result.data?.kDrama as KDrama;
 				currentKDramas[
@@ -72,7 +72,7 @@ const Board: React.FC = () => {
 				throw new Error("Couldn't increase episodes");
 			}
 		},
-		[kDramas, increaseEpisodesMutation]
+		[kDramas, setEpisodesMutation]
 	);
 
 	const setStatus = useCallback(
@@ -105,10 +105,10 @@ const Board: React.FC = () => {
 			<MainCard
 				kDrama={displayedKDrama || watchedKDrama!}
 				setStatus={setStatus}
-				increaseEpisodes={increaseEpisodes}
+				setEpisodes={setEpisodes}
 			/>
 		);
-	}, [loading, watchedKDrama, displayedKDrama, setStatus, increaseEpisodes]);
+	}, [loading, watchedKDrama, displayedKDrama, setStatus, setEpisodes]);
 
 	return (
 		<Grid

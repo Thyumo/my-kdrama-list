@@ -12,12 +12,22 @@ import { STATUSES, ACTIONS } from "../Constants";
 
 interface Props {
 	kDrama: KDrama;
-	increaseEpisodes: (id: string, current: number) => void;
+	setEpisodes: (id: string, current: number) => void;
 	setStatus: (id: string, status: string) => void;
 }
 
-const MainCard: React.FC<Props> = ({ kDrama, increaseEpisodes, setStatus }) => {
+const MainCard: React.FC<Props> = ({ kDrama, setEpisodes, setStatus }) => {
 	const isWatching = kDrama.status === STATUSES.WATCHING;
+
+	const handleStart = () => {
+		setStatus(kDrama._id, STATUSES.WATCHING);
+		setEpisodes(kDrama._id, 1);
+	};
+
+	const handleComplete = () => {
+		setStatus(kDrama._id, STATUSES.COMPLETED);
+		setEpisodes(kDrama._id, kDrama.totalEpisodes);
+	};
 
 	return (
 		<Card
@@ -50,18 +60,13 @@ const MainCard: React.FC<Props> = ({ kDrama, increaseEpisodes, setStatus }) => {
 					<Button
 						variant="outlined"
 						color="primary"
-						onClick={() =>
-							setStatus(
-								kDrama._id,
-								isWatching ? STATUSES.COMPLETED : STATUSES.WATCHING
-							)
-						}
+						onClick={() => (isWatching ? handleComplete() : handleStart())}
 					>
 						{ACTIONS[kDrama.status]}
 					</Button>
 					<Button
 						onClick={() =>
-							increaseEpisodes(kDrama._id, kDrama.currentEpisode || 0)
+							setEpisodes(kDrama._id, (kDrama.currentEpisode || 0) + 1)
 						}
 						variant="outlined"
 						color="primary"

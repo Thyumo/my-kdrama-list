@@ -42,7 +42,7 @@ mutation StartKDrama($id: ObjectId!) {
 	}
 }
 
-mutation IncreaseEpisodes($id: ObjectId!, $counter: Float!) {
+mutation SetEpisodes($id: ObjectId!, $counter: Float!) {
 	kDrama: updateOneKDrama(query: { _id: $id }, set: { currentEpisode: $counter } ) {
 		_id
 		title

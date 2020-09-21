@@ -376,13 +376,13 @@ export type StartKDramaMutation = (
   )> }
 );
 
-export type IncreaseEpisodesMutationVariables = Exact<{
+export type SetEpisodesMutationVariables = Exact<{
   id: Scalars['ObjectId'];
   counter: Scalars['Float'];
 }>;
 
 
-export type IncreaseEpisodesMutation = (
+export type SetEpisodesMutation = (
   { __typename?: 'Mutation' }
   & { kDrama?: Maybe<(
     { __typename?: 'KDrama' }
