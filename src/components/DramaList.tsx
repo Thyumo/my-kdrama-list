@@ -1,6 +1,15 @@
-import React from "react";
-import { Avatar, Grid, Tooltip, withStyles, styled } from "@material-ui/core";
+import React, { useState } from "react";
+import {
+	Avatar,
+	Grid,
+	Tooltip,
+	withStyles,
+	styled,
+	Fab,
+} from "@material-ui/core";
 import QuestionMarkIcon from "@material-ui/icons/Help";
+import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
+import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 
 import { KDrama } from "../types";
 
@@ -24,28 +33,66 @@ const BigAvatar = styled(Avatar)({
 const StyledGrid = styled(Grid)({
 	marginTop: 30,
 	marginBottom: 20,
-	width: 800,
+	width: 900,
 });
 
 const DramaList: React.FC<Props> = ({ list, setDisplayedKDrama }) => {
+	const [currentPage, setCurrentPage] = useState<number>(0);
+
+	const displayedNumber = 4;
+	const displayedDramas = list.slice(
+		currentPage * displayedNumber,
+		(currentPage + 1) * displayedNumber
+	);
+
 	const handleClick = (kDrama: KDrama) => {
 		setDisplayedKDrama(kDrama);
-	}
+	};
+
+	const handlePreviousPage = () => {
+		const previousPage = currentPage - 1;
+		if (previousPage < 0) return;
+		setCurrentPage(previousPage);
+	};
+
+	const handleNextPage = () => {
+		const nextPage = currentPage + 1;
+		if (nextPage * displayedNumber > list.length) return;
+		setCurrentPage(nextPage);
+	};
 
 	return (
-		<StyledGrid container direction="row" justify="space-evenly">
-			{list.map((kDrama) => (
-				<TitleTooltip key={kDrama._id} title={kDrama.title}>
-					{kDrama.image ? (
-						<BigAvatar onClick={() => handleClick(kDrama)} src={kDrama.image} />
-					) : (
-						<BigAvatar>
-							<QuestionMarkIcon style={{ fontSize: "150px" }} />
-						</BigAvatar>
-					)}
-				</TitleTooltip>
-			))}
-		</StyledGrid>
+		<Grid
+			style={{ width: 1100 }}
+			container
+			direction="row"
+			justify="space-between"
+			alignItems="center"
+		>
+			<Fab color="primary" onClick={handlePreviousPage}>
+				<ArrowLeftIcon fontSize="large" />
+			</Fab>
+			<StyledGrid container direction="row" justify="space-evenly">
+				{displayedDramas.map((kDrama) => (
+					<TitleTooltip key={kDrama._id} title={kDrama.title}>
+						{kDrama.image ? (
+							<BigAvatar
+								onClick={() => handleClick(kDrama)}
+								src={kDrama.image}
+							/>
+						) : (
+							<BigAvatar>
+								<QuestionMarkIcon style={{ fontSize: "150px" }} />
+							</BigAvatar>
+						)}
+					</TitleTooltip>
+				))}
+			</StyledGrid>
+
+			<Fab color="primary" onClick={handleNextPage}>
+				<ArrowRightIcon fontSize="large" />
+			</Fab>
+		</Grid>
 	);
 };
 
