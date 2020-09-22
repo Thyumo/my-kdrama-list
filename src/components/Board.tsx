@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from "react";
-import { Typography, CircularProgress, Grid } from "@material-ui/core";
+import { Typography, CircularProgress, Grid, styled } from "@material-ui/core";
 
 import { useRealmApp } from "../realm/RealmApp";
 import {
@@ -14,6 +14,13 @@ import KDramaList from "./DramaList";
 import MainCard from "./MainCard";
 import FabGroup from "./FabGroup";
 import AddKDramaForm from "./AddKDramaForm";
+
+const StyledBackgroundGrid = styled(Grid)({
+	background:
+		"linear-gradient(130deg, rgba(174,229,238,1) 0%, rgba(75,160,255,1) 100%)",
+	height: "100vh",
+	borderRadius: "0% 0% 80% 0%",
+});
 
 const Board: React.FC = () => {
 	const [kDramas, setKDramas] = useState<KDrama[]>([]);
@@ -111,20 +118,18 @@ const Board: React.FC = () => {
 	}, [loading, watchedKDrama, displayedKDrama, setStatus, setEpisodes]);
 
 	return (
-		<Grid
-			style={{
-				background:
-					"linear-gradient(130deg, rgba(174,229,238,1) 0%, rgba(75,160,255,1) 100%)",
-				height: "100vh",
-				borderRadius: "0% 0% 80% 0%",
-			}}
+		<StyledBackgroundGrid
 			container
 			direction="column"
 			alignItems="center"
 			justify="space-evenly"
 		>
 			{renderCard()}
-			<KDramaList setDisplayedKDrama={setDisplayedKDrama} list={filteredKDramas.slice(0, 4)} isLoading={loading} />
+			<KDramaList
+				setDisplayedKDrama={setDisplayedKDrama}
+				list={filteredKDramas}
+				isLoading={loading}
+			/>
 			<FabGroup
 				setFilter={setStatusFilter}
 				handleOpen={() => setIsOpen(true)}
@@ -135,7 +140,7 @@ const Board: React.FC = () => {
 				handleClose={() => setIsOpen(false)}
 				isOpen={isOpen}
 			/>
-		</Grid>
+		</StyledBackgroundGrid>
 	);
 };
 

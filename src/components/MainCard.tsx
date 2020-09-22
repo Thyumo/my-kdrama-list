@@ -47,16 +47,16 @@ const MainCard: React.FC<Props> = ({ kDrama, setEpisodes, setStatus }) => {
 						alt="kdrama"
 					/>
 				)}
-				<Typography style={{ paddingLeft: "5px" }} variant="h4">
+				<Typography style={{ paddingLeft: "15px" }} variant="h4">
 					{isWatching ? "Currently watching:" : "Next planned:"}
 				</Typography>
 				<Typography
-					style={{ paddingLeft: "5px", fontWeight: "bold" }}
+					style={{ paddingLeft: "15px", fontWeight: "bold" }}
 					variant="h3"
 				>
 					{kDrama.title ?? "No currently watched KDrama"}
 				</Typography>
-				<CardActions style={{ justifyContent: "space-between" }}>
+				<CardActions style={{ justifyContent: "space-between", padding: "8px 15px 15px 15px" }}>
 					<Button
 						variant="outlined"
 						color="primary"

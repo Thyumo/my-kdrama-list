@@ -76,18 +76,18 @@ const LoginScreen: React.FC = () => {
 			<Paper
 				elevation={4}
 				style={{
-					paddingTop: "100px",
-					paddingBottom: "100px",
+					paddingTop: "70px",
+					paddingBottom: "70px",
 					marginTop: "200px",
 					display: "flex",
 					flexDirection: "column",
 					alignItems: "center",
 				}}
 			>
-				<Typography variant="h2">Login Screen</Typography>
+				<Typography variant="h2">My KDrama List</Typography>
 				<form>
 					<TextField
-						style={{ margin: "8px" }}
+						style={{ margin: "8px", marginTop: "38px" }}
 						fullWidth
 						id="email"
 						label="Email"
@@ -109,7 +109,7 @@ const LoginScreen: React.FC = () => {
 						onChange={(e) => setPassword(e.target.value)}
 					/>
 					<Button
-						style={{ margin: "8px" }}
+						style={{ margin: "8px", marginTop: "38px" }}
 						fullWidth
 						variant="outlined"
 						color="primary"
