@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 
 import { KDrama } from "../types";
-import { STATUSES, ACTIONS } from "../Constants";
+import { STATUSES, ACTIONS_TEXT, STATUS_TEXT } from "../Constants";
 
 interface Props {
 	kDrama: KDrama;
@@ -17,8 +17,6 @@ interface Props {
 }
 
 const MainCard: React.FC<Props> = ({ kDrama, setEpisodes, setStatus }) => {
-	const isWatching = kDrama.status === STATUSES.WATCHING;
-
 	const handleStart = () => {
 		setStatus(kDrama._id, STATUSES.WATCHING);
 		setEpisodes(kDrama._id, 1);
@@ -27,6 +25,12 @@ const MainCard: React.FC<Props> = ({ kDrama, setEpisodes, setStatus }) => {
 	const handleComplete = () => {
 		setStatus(kDrama._id, STATUSES.COMPLETED);
 		setEpisodes(kDrama._id, kDrama.totalEpisodes);
+	};
+
+	const ACTIONS: { [key: string]: () => void } = {
+		watching: handleComplete,
+		completed: () => {},
+		planned: handleStart,
 	};
 
 	return (
@@ -48,7 +52,7 @@ const MainCard: React.FC<Props> = ({ kDrama, setEpisodes, setStatus }) => {
 					/>
 				)}
 				<Typography style={{ paddingLeft: "15px" }} variant="h4">
-					{isWatching ? "Currently watching:" : "Next planned:"}
+					{STATUS_TEXT[kDrama.status]}
 				</Typography>
 				<Typography
 					style={{ paddingLeft: "15px", fontWeight: "bold" }}
@@ -56,13 +60,15 @@ const MainCard: React.FC<Props> = ({ kDrama, setEpisodes, setStatus }) => {
 				>
 					{kDrama.title ?? "No currently watched KDrama"}
 				</Typography>
-				<CardActions style={{ justifyContent: "space-between", padding: "8px 15px 15px 15px" }}>
+				<CardActions
+					style={{ justifyContent: "flex-end", padding: "8px 15px 15px 15px" }}
+				>
 					<Button
 						variant="outlined"
 						color="primary"
-						onClick={() => (isWatching ? handleComplete() : handleStart())}
+						onClick={() => ACTIONS[kDrama.status]()}
 					>
-						{ACTIONS[kDrama.status]}
+						{ACTIONS_TEXT[kDrama.status]}
 					</Button>
 					<Button
 						onClick={() =>
