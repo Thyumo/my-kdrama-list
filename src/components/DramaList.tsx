@@ -4,8 +4,8 @@ import {
 	Grid,
 	Tooltip,
 	withStyles,
-	styled,
 	Fab,
+	styled,
 } from "@material-ui/core";
 import QuestionMarkIcon from "@material-ui/icons/Help";
 import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
@@ -30,10 +30,14 @@ const BigAvatar = styled(Avatar)({
 	width: 150,
 });
 
-const StyledGrid = styled(Grid)({
+const StyledInnerGrid = styled(Grid)({
 	marginTop: 30,
 	marginBottom: 20,
 	width: 900,
+});
+
+const StyledOuterGrid = styled(Grid)({
+	width: 1100,
 });
 
 const DramaList: React.FC<Props> = ({ list, setDisplayedKDrama }) => {
@@ -62,8 +66,7 @@ const DramaList: React.FC<Props> = ({ list, setDisplayedKDrama }) => {
 	};
 
 	return (
-		<Grid
-			style={{ width: 1100 }}
+		<StyledOuterGrid
 			container
 			direction="row"
 			justify="space-between"
@@ -72,7 +75,7 @@ const DramaList: React.FC<Props> = ({ list, setDisplayedKDrama }) => {
 			<Fab color="primary" onClick={handlePreviousPage}>
 				<ArrowLeftIcon fontSize="large" />
 			</Fab>
-			<StyledGrid container direction="row" justify="space-evenly">
+			<StyledInnerGrid container direction="row" justify="space-evenly">
 				{displayedDramas.map((kDrama) => (
 					<TitleTooltip key={kDrama._id} title={kDrama.title}>
 						{kDrama.image ? (
@@ -87,12 +90,12 @@ const DramaList: React.FC<Props> = ({ list, setDisplayedKDrama }) => {
 						)}
 					</TitleTooltip>
 				))}
-			</StyledGrid>
+			</StyledInnerGrid>
 
 			<Fab color="primary" onClick={handleNextPage}>
 				<ArrowRightIcon fontSize="large" />
 			</Fab>
-		</Grid>
+		</StyledOuterGrid>
 	);
 };
 

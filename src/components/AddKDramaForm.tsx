@@ -9,10 +9,18 @@ import {
 	Select,
 	MenuItem,
 	Button,
+	styled,
 } from "@material-ui/core";
 
 import { STATUSES } from "../Constants";
 import { KDramaInsertInput } from "../types";
+
+const SubmitButton = styled(Button)({
+	display: "flex",
+	alignSelf: "flex-end",
+	width: "30%",
+	marginTop: 20,
+});
 
 interface Props {
 	isOpen: boolean;
@@ -71,15 +79,9 @@ const AddKDramaForm: React.FC<Props> = ({ isOpen, handleClose, addKDrama }) => {
 					margin="dense"
 					label="Total Episodes"
 				/>
-				<Button
+				<SubmitButton
 					type="submit"
 					color="primary"
-					style={{
-						display: "flex",
-						alignSelf: "flex-end",
-						width: "30%",
-						marginTop: 20,
-					}}
 					variant="outlined"
 					onClick={() => {
 						addKDrama(inputData);
@@ -87,7 +89,7 @@ const AddKDramaForm: React.FC<Props> = ({ isOpen, handleClose, addKDrama }) => {
 					}}
 				>
 					Add
-				</Button>
+				</SubmitButton>
 			</DialogContent>
 		</Dialog>
 	);

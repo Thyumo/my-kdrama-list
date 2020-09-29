@@ -5,10 +5,22 @@ import {
 	CardActions,
 	Button,
 	Typography,
+	styled,
 } from "@material-ui/core";
 
 import { KDrama } from "../types";
 import { STATUSES, ACTIONS_TEXT, STATUS_TEXT } from "../Constants";
+
+const StyledCard = styled(Card)({
+	width: 800,
+	marginTop: 50,
+});
+
+const CardImage = styled("img")({
+	height: 450,
+	width: 800,
+	objectFit: "cover",
+});
 
 interface Props {
 	kDrama: KDrama;
@@ -34,23 +46,9 @@ const MainCard: React.FC<Props> = ({ kDrama, setEpisodes, setStatus }) => {
 	};
 
 	return (
-		<Card
-			style={{
-				width: "800px",
-				marginTop: "50px",
-			}}
-			elevation={5}
-		>
+		<StyledCard elevation={5}>
 			<CardContent style={{ padding: "0px" }}>
-				{kDrama?.image && (
-					<img
-						style={{ objectFit: "cover" }}
-						width="800px"
-						height="450px"
-						src={kDrama.image}
-						alt="kdrama"
-					/>
-				)}
+				{kDrama?.image && <CardImage src={kDrama.image} alt="kdrama" />}
 				<Typography style={{ paddingLeft: "15px" }} variant="h4">
 					{STATUS_TEXT[kDrama.status]}
 				</Typography>
@@ -81,7 +79,7 @@ const MainCard: React.FC<Props> = ({ kDrama, setEpisodes, setStatus }) => {
 					</Button>
 				</CardActions>
 			</CardContent>
-		</Card>
+		</StyledCard>
 	);
 };
 
