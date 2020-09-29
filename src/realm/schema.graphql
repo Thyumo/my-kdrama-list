@@ -10,6 +10,7 @@ type KDrama {
   _id: ObjectId!
   currentEpisode: Float
   image: String
+  rating: Float
   status: String!
   title: String!
   totalEpisodes: Float!
@@ -19,100 +20,115 @@ input KDramaInsertInput {
   status: String!
   totalEpisodes: Float!
   currentEpisode: Float
+  rating: Float
   _id: ObjectId
   title: String!
   image: String
 }
 
 input KDramaQueryInput {
-  status_in: [String]
-  image_ne: String
-  _id: ObjectId
-  totalEpisodes_ne: Float
-  status_exists: Boolean
-  _id_lte: ObjectId
-  image_nin: [String]
-  title_nin: [String]
-  currentEpisode: Float
-  currentEpisode_lte: Float
-  status_lte: String
-  totalEpisodes_nin: [Float]
-  image_lt: String
-  image_gt: String
-  status_gt: String
-  currentEpisode_in: [Float]
-  title_gt: String
-  status_lt: String
-  _id_ne: ObjectId
-  title: String
-  status_nin: [String]
-  status_gte: String
-  image_gte: String
-  _id_gte: ObjectId
-  image_exists: Boolean
-  AND: [KDramaQueryInput!]
-  title_exists: Boolean
-  status_ne: String
-  totalEpisodes: Float
-  _id_lt: ObjectId
-  _id_nin: [ObjectId]
-  title_lte: String
-  _id_in: [ObjectId]
-  currentEpisode_ne: Float
-  title_in: [String]
-  totalEpisodes_lte: Float
-  totalEpisodes_gt: Float
-  totalEpisodes_gte: Float
-  currentEpisode_gt: Float
-  _id_gt: ObjectId
-  _id_exists: Boolean
-  status: String
-  currentEpisode_gte: Float
-  OR: [KDramaQueryInput!]
-  title_gte: String
-  title_lt: String
-  totalEpisodes_exists: Boolean
-  image_lte: String
   currentEpisode_exists: Boolean
-  title_ne: String
-  currentEpisode_lt: Float
+  _id_lt: ObjectId
   totalEpisodes_lt: Float
-  image_in: [String]
   image: String
+  image_nin: [String]
+  image_lte: String
+  image_ne: String
+  totalEpisodes_gt: Float
+  AND: [KDramaQueryInput!]
+  currentEpisode_ne: Float
+  image_lt: String
+  _id_gt: ObjectId
+  status_nin: [String]
+  title_gt: String
+  rating: Float
+  currentEpisode_gte: Float
   totalEpisodes_in: [Float]
+  title_lte: String
+  _id_lte: ObjectId
+  totalEpisodes_gte: Float
+  image_exists: Boolean
+  totalEpisodes_lte: Float
+  status_ne: String
+  title: String
+  _id_in: [ObjectId]
+  currentEpisode_gt: Float
+  status_lt: String
+  rating_gt: Float
+  title_gte: String
+  rating_lte: Float
+  status_exists: Boolean
+  _id: ObjectId
+  status_gt: String
+  rating_ne: Float
+  rating_lt: Float
+  currentEpisode_lte: Float
+  title_ne: String
+  status_lte: String
+  currentEpisode: Float
+  image_in: [String]
+  status_in: [String]
+  OR: [KDramaQueryInput!]
+  title_nin: [String]
+  totalEpisodes_exists: Boolean
+  title_in: [String]
+  totalEpisodes_nin: [Float]
+  totalEpisodes: Float
+  rating_nin: [Float]
+  title_exists: Boolean
+  _id_exists: Boolean
+  rating_in: [Float]
+  totalEpisodes_ne: Float
+  image_gt: String
+  _id_gte: ObjectId
+  _id_ne: ObjectId
+  status_gte: String
+  rating_gte: Float
+  image_gte: String
   currentEpisode_nin: [Float]
+  _id_nin: [ObjectId]
+  currentEpisode_in: [Float]
+  title_lt: String
+  currentEpisode_lt: Float
+  status: String
+  rating_exists: Boolean
 }
 
 enum KDramaSortByInput {
-  TOTALEPISODES_DESC
-  _ID_ASC
   IMAGE_ASC
   IMAGE_DESC
-  STATUS_ASC
-  TITLE_DESC
-  STATUS_DESC
-  TOTALEPISODES_ASC
   CURRENTEPISODE_ASC
   CURRENTEPISODE_DESC
-  _ID_DESC
+  _ID_ASC
+  TITLE_DESC
   TITLE_ASC
+  TOTALEPISODES_ASC
+  TOTALEPISODES_DESC
+  RATING_ASC
+  RATING_DESC
+  STATUS_ASC
+  STATUS_DESC
+  _ID_DESC
 }
 
 input KDramaUpdateInput {
-  title_unset: Boolean
-  image_unset: Boolean
-  currentEpisode_inc: Float
-  currentEpisode: Float
-  status: String
-  totalEpisodes_inc: Float
   totalEpisodes_unset: Boolean
-  status_unset: Boolean
-  _id_unset: Boolean
-  totalEpisodes: Float
-  title: String
   _id: ObjectId
+  _id_unset: Boolean
+  currentEpisode_inc: Float
+  status: String
+  currentEpisode: Float
   currentEpisode_unset: Boolean
+  title: String
+  rating_unset: Boolean
   image: String
+  image_unset: Boolean
+  rating_inc: Float
+  title_unset: Boolean
+  status_unset: Boolean
+  totalEpisodes: Float
+  rating: Float
+  totalEpisodes_inc: Float
 }
 
 type Mutation {
@@ -127,8 +143,8 @@ type Mutation {
   replaceOneKDrama(query: KDramaQueryInput, data: KDramaInsertInput!): KDrama
   replaceOneUser(query: UserQueryInput, data: UserInsertInput!): User
   updateManyKDramas(query: KDramaQueryInput, set: KDramaUpdateInput!): UpdateManyPayload
-  updateManyUsers(query: UserQueryInput, set: UserUpdateInput!): UpdateManyPayload
-  updateOneKDrama(set: KDramaUpdateInput!, query: KDramaQueryInput): KDrama
+  updateManyUsers(set: UserUpdateInput!, query: UserQueryInput): UpdateManyPayload
+  updateOneKDrama(query: KDramaQueryInput, set: KDramaUpdateInput!): KDrama
   updateOneUser(query: UserQueryInput, set: UserUpdateInput!): User
   upsertOneKDrama(query: KDramaQueryInput, data: KDramaInsertInput!): KDrama
   upsertOneUser(query: UserQueryInput, data: UserInsertInput!): User
@@ -159,26 +175,26 @@ input UserInsertInput {
 }
 
 input UserQueryInput {
-  _id_exists: Boolean
-  name_nin: [String]
-  name_gte: String
-  _id_lte: String
-  name_ne: String
-  AND: [UserQueryInput!]
-  name_in: [String]
+  _id: String
   _id_gt: String
   name_exists: Boolean
-  OR: [UserQueryInput!]
-  _id: String
-  _id_nin: [String]
-  _id_ne: String
-  _id_gte: String
-  name: String
-  _id_in: [String]
-  name_lt: String
-  _id_lt: String
-  name_gt: String
+  AND: [UserQueryInput!]
+  _id_exists: Boolean
   name_lte: String
+  _id_in: [String]
+  name_ne: String
+  name_nin: [String]
+  name_gt: String
+  OR: [UserQueryInput!]
+  _id_lte: String
+  name_gte: String
+  _id_nin: [String]
+  name: String
+  name_in: [String]
+  _id_ne: String
+  _id_lt: String
+  name_lt: String
+  _id_gte: String
 }
 
 enum UserSortByInput {

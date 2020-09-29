@@ -13,6 +13,7 @@ export const GetAllKDramasDocument = gql`
     status
     totalEpisodes
     currentEpisode
+    rating
   }
 }
     `;
@@ -50,6 +51,7 @@ export const AddKDramaDocument = gql`
     status
     totalEpisodes
     currentEpisode
+    rating
   }
 }
     `;
@@ -87,6 +89,7 @@ export const SetKDramaStatusDocument = gql`
     status
     totalEpisodes
     currentEpisode
+    rating
   }
 }
     `;
@@ -125,6 +128,7 @@ export const StartKDramaDocument = gql`
     status
     totalEpisodes
     currentEpisode
+    rating
   }
 }
     `;
@@ -162,6 +166,7 @@ export const SetEpisodesDocument = gql`
     status
     totalEpisodes
     currentEpisode
+    rating
   }
 }
     `;

@@ -25,6 +25,7 @@ export type KDrama = {
   _id: Scalars['ObjectId'];
   currentEpisode?: Maybe<Scalars['Float']>;
   image?: Maybe<Scalars['String']>;
+  rating?: Maybe<Scalars['Float']>;
   status: Scalars['String'];
   title: Scalars['String'];
   totalEpisodes: Scalars['Float'];
@@ -34,100 +35,115 @@ export type KDramaInsertInput = {
   status: Scalars['String'];
   totalEpisodes: Scalars['Float'];
   currentEpisode?: Maybe<Scalars['Float']>;
+  rating?: Maybe<Scalars['Float']>;
   _id?: Maybe<Scalars['ObjectId']>;
   title: Scalars['String'];
   image?: Maybe<Scalars['String']>;
 };
 
 export type KDramaQueryInput = {
-  status_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  image_ne?: Maybe<Scalars['String']>;
-  _id?: Maybe<Scalars['ObjectId']>;
-  totalEpisodes_ne?: Maybe<Scalars['Float']>;
-  status_exists?: Maybe<Scalars['Boolean']>;
-  _id_lte?: Maybe<Scalars['ObjectId']>;
-  image_nin?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_nin?: Maybe<Array<Maybe<Scalars['String']>>>;
-  currentEpisode?: Maybe<Scalars['Float']>;
-  currentEpisode_lte?: Maybe<Scalars['Float']>;
-  status_lte?: Maybe<Scalars['String']>;
-  totalEpisodes_nin?: Maybe<Array<Maybe<Scalars['Float']>>>;
-  image_lt?: Maybe<Scalars['String']>;
-  image_gt?: Maybe<Scalars['String']>;
-  status_gt?: Maybe<Scalars['String']>;
-  currentEpisode_in?: Maybe<Array<Maybe<Scalars['Float']>>>;
-  title_gt?: Maybe<Scalars['String']>;
-  status_lt?: Maybe<Scalars['String']>;
-  _id_ne?: Maybe<Scalars['ObjectId']>;
-  title?: Maybe<Scalars['String']>;
-  status_nin?: Maybe<Array<Maybe<Scalars['String']>>>;
-  status_gte?: Maybe<Scalars['String']>;
-  image_gte?: Maybe<Scalars['String']>;
-  _id_gte?: Maybe<Scalars['ObjectId']>;
-  image_exists?: Maybe<Scalars['Boolean']>;
-  AND?: Maybe<Array<KDramaQueryInput>>;
-  title_exists?: Maybe<Scalars['Boolean']>;
-  status_ne?: Maybe<Scalars['String']>;
-  totalEpisodes?: Maybe<Scalars['Float']>;
-  _id_lt?: Maybe<Scalars['ObjectId']>;
-  _id_nin?: Maybe<Array<Maybe<Scalars['ObjectId']>>>;
-  title_lte?: Maybe<Scalars['String']>;
-  _id_in?: Maybe<Array<Maybe<Scalars['ObjectId']>>>;
-  currentEpisode_ne?: Maybe<Scalars['Float']>;
-  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  totalEpisodes_lte?: Maybe<Scalars['Float']>;
-  totalEpisodes_gt?: Maybe<Scalars['Float']>;
-  totalEpisodes_gte?: Maybe<Scalars['Float']>;
-  currentEpisode_gt?: Maybe<Scalars['Float']>;
-  _id_gt?: Maybe<Scalars['ObjectId']>;
-  _id_exists?: Maybe<Scalars['Boolean']>;
-  status?: Maybe<Scalars['String']>;
-  currentEpisode_gte?: Maybe<Scalars['Float']>;
-  OR?: Maybe<Array<KDramaQueryInput>>;
-  title_gte?: Maybe<Scalars['String']>;
-  title_lt?: Maybe<Scalars['String']>;
-  totalEpisodes_exists?: Maybe<Scalars['Boolean']>;
-  image_lte?: Maybe<Scalars['String']>;
   currentEpisode_exists?: Maybe<Scalars['Boolean']>;
-  title_ne?: Maybe<Scalars['String']>;
-  currentEpisode_lt?: Maybe<Scalars['Float']>;
+  _id_lt?: Maybe<Scalars['ObjectId']>;
   totalEpisodes_lt?: Maybe<Scalars['Float']>;
-  image_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   image?: Maybe<Scalars['String']>;
+  image_nin?: Maybe<Array<Maybe<Scalars['String']>>>;
+  image_lte?: Maybe<Scalars['String']>;
+  image_ne?: Maybe<Scalars['String']>;
+  totalEpisodes_gt?: Maybe<Scalars['Float']>;
+  AND?: Maybe<Array<KDramaQueryInput>>;
+  currentEpisode_ne?: Maybe<Scalars['Float']>;
+  image_lt?: Maybe<Scalars['String']>;
+  _id_gt?: Maybe<Scalars['ObjectId']>;
+  status_nin?: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_gt?: Maybe<Scalars['String']>;
+  rating?: Maybe<Scalars['Float']>;
+  currentEpisode_gte?: Maybe<Scalars['Float']>;
   totalEpisodes_in?: Maybe<Array<Maybe<Scalars['Float']>>>;
+  title_lte?: Maybe<Scalars['String']>;
+  _id_lte?: Maybe<Scalars['ObjectId']>;
+  totalEpisodes_gte?: Maybe<Scalars['Float']>;
+  image_exists?: Maybe<Scalars['Boolean']>;
+  totalEpisodes_lte?: Maybe<Scalars['Float']>;
+  status_ne?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  _id_in?: Maybe<Array<Maybe<Scalars['ObjectId']>>>;
+  currentEpisode_gt?: Maybe<Scalars['Float']>;
+  status_lt?: Maybe<Scalars['String']>;
+  rating_gt?: Maybe<Scalars['Float']>;
+  title_gte?: Maybe<Scalars['String']>;
+  rating_lte?: Maybe<Scalars['Float']>;
+  status_exists?: Maybe<Scalars['Boolean']>;
+  _id?: Maybe<Scalars['ObjectId']>;
+  status_gt?: Maybe<Scalars['String']>;
+  rating_ne?: Maybe<Scalars['Float']>;
+  rating_lt?: Maybe<Scalars['Float']>;
+  currentEpisode_lte?: Maybe<Scalars['Float']>;
+  title_ne?: Maybe<Scalars['String']>;
+  status_lte?: Maybe<Scalars['String']>;
+  currentEpisode?: Maybe<Scalars['Float']>;
+  image_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  status_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  OR?: Maybe<Array<KDramaQueryInput>>;
+  title_nin?: Maybe<Array<Maybe<Scalars['String']>>>;
+  totalEpisodes_exists?: Maybe<Scalars['Boolean']>;
+  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  totalEpisodes_nin?: Maybe<Array<Maybe<Scalars['Float']>>>;
+  totalEpisodes?: Maybe<Scalars['Float']>;
+  rating_nin?: Maybe<Array<Maybe<Scalars['Float']>>>;
+  title_exists?: Maybe<Scalars['Boolean']>;
+  _id_exists?: Maybe<Scalars['Boolean']>;
+  rating_in?: Maybe<Array<Maybe<Scalars['Float']>>>;
+  totalEpisodes_ne?: Maybe<Scalars['Float']>;
+  image_gt?: Maybe<Scalars['String']>;
+  _id_gte?: Maybe<Scalars['ObjectId']>;
+  _id_ne?: Maybe<Scalars['ObjectId']>;
+  status_gte?: Maybe<Scalars['String']>;
+  rating_gte?: Maybe<Scalars['Float']>;
+  image_gte?: Maybe<Scalars['String']>;
   currentEpisode_nin?: Maybe<Array<Maybe<Scalars['Float']>>>;
+  _id_nin?: Maybe<Array<Maybe<Scalars['ObjectId']>>>;
+  currentEpisode_in?: Maybe<Array<Maybe<Scalars['Float']>>>;
+  title_lt?: Maybe<Scalars['String']>;
+  currentEpisode_lt?: Maybe<Scalars['Float']>;
+  status?: Maybe<Scalars['String']>;
+  rating_exists?: Maybe<Scalars['Boolean']>;
 };
 
 export enum KDramaSortByInput {
-  TotalepisodesDesc = 'TOTALEPISODES_DESC',
-  IdAsc = '_ID_ASC',
   ImageAsc = 'IMAGE_ASC',
   ImageDesc = 'IMAGE_DESC',
-  StatusAsc = 'STATUS_ASC',
-  TitleDesc = 'TITLE_DESC',
-  StatusDesc = 'STATUS_DESC',
-  TotalepisodesAsc = 'TOTALEPISODES_ASC',
   CurrentepisodeAsc = 'CURRENTEPISODE_ASC',
   CurrentepisodeDesc = 'CURRENTEPISODE_DESC',
-  IdDesc = '_ID_DESC',
-  TitleAsc = 'TITLE_ASC'
+  IdAsc = '_ID_ASC',
+  TitleDesc = 'TITLE_DESC',
+  TitleAsc = 'TITLE_ASC',
+  TotalepisodesAsc = 'TOTALEPISODES_ASC',
+  TotalepisodesDesc = 'TOTALEPISODES_DESC',
+  RatingAsc = 'RATING_ASC',
+  RatingDesc = 'RATING_DESC',
+  StatusAsc = 'STATUS_ASC',
+  StatusDesc = 'STATUS_DESC',
+  IdDesc = '_ID_DESC'
 }
 
 export type KDramaUpdateInput = {
-  title_unset?: Maybe<Scalars['Boolean']>;
-  image_unset?: Maybe<Scalars['Boolean']>;
-  currentEpisode_inc?: Maybe<Scalars['Float']>;
-  currentEpisode?: Maybe<Scalars['Float']>;
-  status?: Maybe<Scalars['String']>;
-  totalEpisodes_inc?: Maybe<Scalars['Float']>;
   totalEpisodes_unset?: Maybe<Scalars['Boolean']>;
-  status_unset?: Maybe<Scalars['Boolean']>;
-  _id_unset?: Maybe<Scalars['Boolean']>;
-  totalEpisodes?: Maybe<Scalars['Float']>;
-  title?: Maybe<Scalars['String']>;
   _id?: Maybe<Scalars['ObjectId']>;
+  _id_unset?: Maybe<Scalars['Boolean']>;
+  currentEpisode_inc?: Maybe<Scalars['Float']>;
+  status?: Maybe<Scalars['String']>;
+  currentEpisode?: Maybe<Scalars['Float']>;
   currentEpisode_unset?: Maybe<Scalars['Boolean']>;
+  title?: Maybe<Scalars['String']>;
+  rating_unset?: Maybe<Scalars['Boolean']>;
   image?: Maybe<Scalars['String']>;
+  image_unset?: Maybe<Scalars['Boolean']>;
+  rating_inc?: Maybe<Scalars['Float']>;
+  title_unset?: Maybe<Scalars['Boolean']>;
+  status_unset?: Maybe<Scalars['Boolean']>;
+  totalEpisodes?: Maybe<Scalars['Float']>;
+  rating?: Maybe<Scalars['Float']>;
+  totalEpisodes_inc?: Maybe<Scalars['Float']>;
 };
 
 export type Mutation = {
@@ -210,14 +226,14 @@ export type MutationUpdateManyKDramasArgs = {
 
 
 export type MutationUpdateManyUsersArgs = {
-  query?: Maybe<UserQueryInput>;
   set: UserUpdateInput;
+  query?: Maybe<UserQueryInput>;
 };
 
 
 export type MutationUpdateOneKDramaArgs = {
-  set: KDramaUpdateInput;
   query?: Maybe<KDramaQueryInput>;
+  set: KDramaUpdateInput;
 };
 
 
@@ -289,26 +305,26 @@ export type UserInsertInput = {
 };
 
 export type UserQueryInput = {
-  _id_exists?: Maybe<Scalars['Boolean']>;
-  name_nin?: Maybe<Array<Maybe<Scalars['String']>>>;
-  name_gte?: Maybe<Scalars['String']>;
-  _id_lte?: Maybe<Scalars['String']>;
-  name_ne?: Maybe<Scalars['String']>;
-  AND?: Maybe<Array<UserQueryInput>>;
-  name_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  _id?: Maybe<Scalars['String']>;
   _id_gt?: Maybe<Scalars['String']>;
   name_exists?: Maybe<Scalars['Boolean']>;
-  OR?: Maybe<Array<UserQueryInput>>;
-  _id?: Maybe<Scalars['String']>;
-  _id_nin?: Maybe<Array<Maybe<Scalars['String']>>>;
-  _id_ne?: Maybe<Scalars['String']>;
-  _id_gte?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  _id_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  name_lt?: Maybe<Scalars['String']>;
-  _id_lt?: Maybe<Scalars['String']>;
-  name_gt?: Maybe<Scalars['String']>;
+  AND?: Maybe<Array<UserQueryInput>>;
+  _id_exists?: Maybe<Scalars['Boolean']>;
   name_lte?: Maybe<Scalars['String']>;
+  _id_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  name_ne?: Maybe<Scalars['String']>;
+  name_nin?: Maybe<Array<Maybe<Scalars['String']>>>;
+  name_gt?: Maybe<Scalars['String']>;
+  OR?: Maybe<Array<UserQueryInput>>;
+  _id_lte?: Maybe<Scalars['String']>;
+  name_gte?: Maybe<Scalars['String']>;
+  _id_nin?: Maybe<Array<Maybe<Scalars['String']>>>;
+  name?: Maybe<Scalars['String']>;
+  name_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  _id_ne?: Maybe<Scalars['String']>;
+  _id_lt?: Maybe<Scalars['String']>;
+  name_lt?: Maybe<Scalars['String']>;
+  _id_gte?: Maybe<Scalars['String']>;
 };
 
 export enum UserSortByInput {
@@ -332,7 +348,7 @@ export type GetAllKDramasQuery = (
   { __typename?: 'Query' }
   & { kDramas: Array<Maybe<(
     { __typename?: 'KDrama' }
-    & Pick<KDrama, '_id' | 'title' | 'image' | 'status' | 'totalEpisodes' | 'currentEpisode'>
+    & Pick<KDrama, '_id' | 'title' | 'image' | 'status' | 'totalEpisodes' | 'currentEpisode' | 'rating'>
   )>> }
 );
 
@@ -345,7 +361,7 @@ export type AddKDramaMutation = (
   { __typename?: 'Mutation' }
   & { kDrama?: Maybe<(
     { __typename?: 'KDrama' }
-    & Pick<KDrama, '_id' | 'title' | 'image' | 'status' | 'totalEpisodes' | 'currentEpisode'>
+    & Pick<KDrama, '_id' | 'title' | 'image' | 'status' | 'totalEpisodes' | 'currentEpisode' | 'rating'>
   )> }
 );
 
@@ -359,7 +375,7 @@ export type SetKDramaStatusMutation = (
   { __typename?: 'Mutation' }
   & { kDrama?: Maybe<(
     { __typename?: 'KDrama' }
-    & Pick<KDrama, '_id' | 'title' | 'image' | 'status' | 'totalEpisodes' | 'currentEpisode'>
+    & Pick<KDrama, '_id' | 'title' | 'image' | 'status' | 'totalEpisodes' | 'currentEpisode' | 'rating'>
   )> }
 );
 
@@ -372,7 +388,7 @@ export type StartKDramaMutation = (
   { __typename?: 'Mutation' }
   & { kDrama?: Maybe<(
     { __typename?: 'KDrama' }
-    & Pick<KDrama, '_id' | 'title' | 'image' | 'status' | 'totalEpisodes' | 'currentEpisode'>
+    & Pick<KDrama, '_id' | 'title' | 'image' | 'status' | 'totalEpisodes' | 'currentEpisode' | 'rating'>
   )> }
 );
 
@@ -386,6 +402,6 @@ export type SetEpisodesMutation = (
   { __typename?: 'Mutation' }
   & { kDrama?: Maybe<(
     { __typename?: 'KDrama' }
-    & Pick<KDrama, '_id' | 'title' | 'image' | 'status' | 'totalEpisodes' | 'currentEpisode'>
+    & Pick<KDrama, '_id' | 'title' | 'image' | 'status' | 'totalEpisodes' | 'currentEpisode' | 'rating'>
   )> }
 );
