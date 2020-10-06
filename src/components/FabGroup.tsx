@@ -1,10 +1,27 @@
 import React, { useState } from "react";
-import { Fab, ButtonGroup, Button } from "@material-ui/core";
+import { Fab, ButtonGroup, Button, styled } from "@material-ui/core";
+import { green } from "@material-ui/core/colors";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AddIcon from "@material-ui/icons/AddCircle";
 import FilterIcon from "@material-ui/icons/FilterList";
 
 import { STATUSES } from "../Constants";
+
+const FilterGroupFab = styled(Fab)({
+	position: "fixed",
+	right: "80px",
+	bottom: "240px",
+	backgroundColor: green[700],
+	color: "white",
+});
+
+const FilterButtonGroup = styled(ButtonGroup)({
+	position: "fixed",
+	right: "160px",
+	bottom: "200px",
+});
+
+const FilterButton = styled(Button)({ color: green[700], borderColor: green[700] });
 
 interface Props {
 	logOut: () => Promise<void>;
@@ -26,49 +43,22 @@ const FabGroup: React.FC<Props> = ({ logOut, handleOpen, setFilter }) => {
 
 	return (
 		<>
-			<Fab
-				style={{
-					position: "fixed",
-					right: "80px",
-					bottom: "240px",
-					backgroundColor: "green",
-					color: "white",
-				}}
-				onClick={toggleFilterList}
-			>
+			<FilterGroupFab onClick={toggleFilterList}>
 				<FilterIcon />
-			</Fab>
+			</FilterGroupFab>
 			{showFilterList && (
-				<ButtonGroup
-					variant="outlined"
-					orientation="vertical"
-					style={{ position: "fixed", right: "160px", bottom: "200px" }}
-				>
-					<Button
-						style={{ color: "green", borderColor: "green" }}
-						onClick={() => handleClick(STATUSES.PLANNED)}
-					>
+				<FilterButtonGroup variant="outlined" orientation="vertical">
+					<FilterButton onClick={() => handleClick(STATUSES.PLANNED)}>
 						Planned
-					</Button>
-					<Button
-						style={{ color: "green", borderColor: "green" }}
-						onClick={() => handleClick(STATUSES.WATCHING)}
-					>
+					</FilterButton>
+					<FilterButton onClick={() => handleClick(STATUSES.WATCHING)}>
 						Watching
-					</Button>
-					<Button
-						style={{ color: "green", borderColor: "green" }}
-						onClick={() => handleClick(STATUSES.COMPLETED)}
-					>
+					</FilterButton>
+					<FilterButton onClick={() => handleClick(STATUSES.COMPLETED)}>
 						Completed
-					</Button>
-					<Button
-						style={{ color: "green", borderColor: "green" }}
-						onClick={() => handleClick(null)}
-					>
-						All
-					</Button>
-				</ButtonGroup>
+					</FilterButton>
+					<FilterButton onClick={() => handleClick(null)}>All</FilterButton>
+				</FilterButtonGroup>
 			)}
 			<Fab
 				style={{ position: "fixed", right: "80px", bottom: "160px" }}

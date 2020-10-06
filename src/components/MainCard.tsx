@@ -22,6 +22,11 @@ const CardImage = styled("img")({
 	objectFit: "cover",
 });
 
+const PaddedCardActions = styled(CardActions)({
+	justifyContent: "flex-end",
+	padding: "8px 15px 15px 15px",
+});
+
 interface Props {
 	kDrama: KDrama;
 	setEpisodes: (id: string, current: number) => void;
@@ -58,9 +63,7 @@ const MainCard: React.FC<Props> = ({ kDrama, setEpisodes, setStatus }) => {
 				>
 					{kDrama.title ?? "No currently watched KDrama"}
 				</Typography>
-				<CardActions
-					style={{ justifyContent: "flex-end", padding: "8px 15px 15px 15px" }}
-				>
+				<PaddedCardActions>
 					<Button
 						variant="outlined"
 						color="primary"
@@ -77,7 +80,7 @@ const MainCard: React.FC<Props> = ({ kDrama, setEpisodes, setStatus }) => {
 					>
 						{`${kDrama.currentEpisode ?? "0"}/${kDrama.totalEpisodes}`}
 					</Button>
-				</CardActions>
+				</PaddedCardActions>
 			</CardContent>
 		</StyledCard>
 	);
