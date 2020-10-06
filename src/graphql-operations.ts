@@ -196,3 +196,42 @@ export function useSetEpisodesMutation(baseOptions?: ApolloReactHooks.MutationHo
 export type SetEpisodesMutationHookResult = ReturnType<typeof useSetEpisodesMutation>;
 export type SetEpisodesMutationResult = ApolloReactCommon.MutationResult<Types.SetEpisodesMutation>;
 export type SetEpisodesMutationOptions = ApolloReactCommon.BaseMutationOptions<Types.SetEpisodesMutation, Types.SetEpisodesMutationVariables>;
+export const SetRatingDocument = gql`
+    mutation SetRating($id: ObjectId!, $rating: Float!) {
+  kDrama: updateOneKDrama(query: {_id: $id}, set: {rating: $rating}) {
+    _id
+    title
+    image
+    status
+    totalEpisodes
+    currentEpisode
+    rating
+  }
+}
+    `;
+export type SetRatingMutationFn = ApolloReactCommon.MutationFunction<Types.SetRatingMutation, Types.SetRatingMutationVariables>;
+
+/**
+ * __useSetRatingMutation__
+ *
+ * To run a mutation, you first call `useSetRatingMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetRatingMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setRatingMutation, { data, loading, error }] = useSetRatingMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      rating: // value for 'rating'
+ *   },
+ * });
+ */
+export function useSetRatingMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SetRatingMutation, Types.SetRatingMutationVariables>) {
+        return ApolloReactHooks.useMutation<Types.SetRatingMutation, Types.SetRatingMutationVariables>(SetRatingDocument, baseOptions);
+      }
+export type SetRatingMutationHookResult = ReturnType<typeof useSetRatingMutation>;
+export type SetRatingMutationResult = ApolloReactCommon.MutationResult<Types.SetRatingMutation>;
+export type SetRatingMutationOptions = ApolloReactCommon.BaseMutationOptions<Types.SetRatingMutation, Types.SetRatingMutationVariables>;
