@@ -37,7 +37,7 @@ const StyledInnerGrid = styled(Grid)({
 });
 
 const StyledOuterGrid = styled(Grid)({
-	width: 1100,
+	width: 1020,
 });
 
 const DramaList: React.FC<Props> = ({ list, setDisplayedKDrama }) => {

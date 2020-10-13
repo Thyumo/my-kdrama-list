@@ -7,6 +7,7 @@ import {
 	useAddKDramaMutation,
 	useSetKDramaStatusMutation,
 	useSetEpisodesMutation,
+	useSetRatingMutation,
 } from "../graphql-operations";
 import { GetAllKDramasQuery, KDrama, KDramaInsertInput } from "../types";
 import { STATUSES } from "../Constants";
@@ -42,6 +43,7 @@ const Board: React.FC = () => {
 	const [addKDramaMutation] = useAddKDramaMutation();
 	const [setKDramaStatusMutation] = useSetKDramaStatusMutation();
 	const [setEpisodesMutation] = useSetEpisodesMutation();
+	const [setRatingMutation] = useSetRatingMutation();
 	const { loading } = useGetAllKDramasQuery({
 		onCompleted: (data: GetAllKDramasQuery) => {
 			if (data?.kDramas) {
@@ -102,6 +104,26 @@ const Board: React.FC = () => {
 		[kDramas, setKDramaStatusMutation]
 	);
 
+	const setRating = useCallback(
+		async (id: string, rating: number) => {
+			const currentKDramas = [...kDramas];
+			try {
+				const result = await setRatingMutation({
+					variables: { id, rating },
+				});
+				const updatedKDrama = result.data?.kDrama as KDrama;
+				currentKDramas[
+					currentKDramas.findIndex(({ _id }) => _id === updatedKDrama._id)
+				] = updatedKDrama;
+				setKDramas(currentKDramas);
+			} catch (err) {
+				setKDramas(currentKDramas);
+				throw new Error("Couldn't set status");
+			}
+		},
+		[kDramas, setRatingMutation]
+	);
+
 	const renderCard = useCallback(() => {
 		if (loading) return <CircularProgress size={200} />;
 
@@ -113,9 +135,17 @@ const Board: React.FC = () => {
 				kDrama={displayedKDrama || watchedKDrama!}
 				setStatus={setStatus}
 				setEpisodes={setEpisodes}
+				setRating={setRating}
 			/>
 		);
-	}, [loading, watchedKDrama, displayedKDrama, setStatus, setEpisodes]);
+	}, [
+		loading,
+		watchedKDrama,
+		displayedKDrama,
+		setStatus,
+		setEpisodes,
+		setRating,
+	]);
 
 	return (
 		<StyledBackgroundGrid

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Card,
 	CardContent,
@@ -6,7 +6,10 @@ import {
 	Button,
 	Typography,
 	styled,
+	withStyles,
 } from "@material-ui/core";
+import { Rating } from "@material-ui/lab";
+import { blue } from "@material-ui/core/colors";
 
 import { KDrama } from "../types";
 import { STATUSES, ACTIONS_TEXT, STATUS_TEXT } from "../Constants";
@@ -23,17 +26,35 @@ const CardImage = styled("img")({
 });
 
 const PaddedCardActions = styled(CardActions)({
-	justifyContent: "flex-end",
+	justifyContent: "space-between",
 	padding: "8px 15px 15px 15px",
 });
+
+const StyledRating = withStyles({
+	iconFilled: {
+		color: blue[700],
+	},
+})(Rating);
 
 interface Props {
 	kDrama: KDrama;
 	setEpisodes: (id: string, current: number) => void;
 	setStatus: (id: string, status: string) => void;
+	setRating: (id: string, rating: number) => void;
 }
 
-const MainCard: React.FC<Props> = ({ kDrama, setEpisodes, setStatus }) => {
+const MainCard: React.FC<Props> = ({
+	kDrama,
+	setEpisodes,
+	setStatus,
+	setRating,
+}) => {
+	const [localRating, setLocalRating] = useState<number>(kDrama.rating ?? 0);
+
+	useEffect(() => {
+		setLocalRating(kDrama.rating ?? 0);
+	}, [kDrama, setLocalRating]);
+
 	const handleStart = () => {
 		setStatus(kDrama._id, STATUSES.WATCHING);
 		setEpisodes(kDrama._id, 1);
@@ -54,32 +75,42 @@ const MainCard: React.FC<Props> = ({ kDrama, setEpisodes, setStatus }) => {
 		<StyledCard elevation={5}>
 			<CardContent style={{ padding: "0px" }}>
 				{kDrama?.image && <CardImage src={kDrama.image} alt="kdrama" />}
-				<Typography style={{ paddingLeft: "15px" }} variant="h4">
+				<Typography style={{ paddingLeft: "15px" }} variant="h5">
 					{STATUS_TEXT[kDrama.status]}
 				</Typography>
 				<Typography
 					style={{ paddingLeft: "15px", fontWeight: "bold" }}
-					variant="h3"
+					variant="h4"
 				>
 					{kDrama.title ?? "No currently watched KDrama"}
 				</Typography>
 				<PaddedCardActions>
-					<Button
-						variant="outlined"
-						color="primary"
-						onClick={() => ACTIONS[kDrama.status]()}
-					>
-						{ACTIONS_TEXT[kDrama.status]}
-					</Button>
-					<Button
-						onClick={() =>
-							setEpisodes(kDrama._id, (kDrama.currentEpisode || 0) + 1)
-						}
-						variant="outlined"
-						color="primary"
-					>
-						{`${kDrama.currentEpisode ?? "0"}/${kDrama.totalEpisodes}`}
-					</Button>
+					<StyledRating
+						value={localRating}
+						onChange={(e, value) => {
+							setLocalRating(value as number);
+							setRating(kDrama._id, value as number);
+						}}
+					/>
+					<div>
+						<Button
+							style={{ marginRight: 5 }}
+							variant="outlined"
+							color="primary"
+							onClick={() => ACTIONS[kDrama.status]()}
+						>
+							{ACTIONS_TEXT[kDrama.status]}
+						</Button>
+						<Button
+							onClick={() =>
+								setEpisodes(kDrama._id, (kDrama.currentEpisode || 0) + 1)
+							}
+							variant="outlined"
+							color="primary"
+						>
+							{`${kDrama.currentEpisode ?? "0"}/${kDrama.totalEpisodes}`}
+						</Button>
+					</div>
 				</PaddedCardActions>
 			</CardContent>
 		</StyledCard>
