@@ -41,6 +41,15 @@ const AddKDramaForm: React.FC<Props> = ({ isOpen, handleClose, addKDrama }) => {
 		totalEpisodes,
 	};
 
+	const handleSubmit = () => {
+		addKDrama(inputData);
+		handleClose();
+		setStatus(STATUSES.PLANNED);
+		setTitle("");
+		setImage("");
+		setTotalEpisodes(0);
+	};
+
 	return (
 		<Dialog fullWidth open={isOpen} onClose={handleClose}>
 			<DialogTitle>Add KDrama</DialogTitle>
@@ -83,10 +92,7 @@ const AddKDramaForm: React.FC<Props> = ({ isOpen, handleClose, addKDrama }) => {
 					type="submit"
 					color="primary"
 					variant="outlined"
-					onClick={() => {
-						addKDrama(inputData);
-						handleClose();
-					}}
+					onClick={handleSubmit}
 				>
 					Add
 				</SubmitButton>
