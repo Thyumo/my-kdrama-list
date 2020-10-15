@@ -6,11 +6,9 @@ import {
 	Button,
 	Typography,
 	styled,
-	withStyles,
 } from "@material-ui/core";
-import { Rating } from "@material-ui/lab";
-import { blue } from "@material-ui/core/colors";
 
+import StyledRating from "./StyledRating";
 import { KDrama } from "../types";
 import { STATUSES, ACTIONS_TEXT, STATUS_TEXT } from "../Constants";
 
@@ -29,12 +27,6 @@ const PaddedCardActions = styled(CardActions)({
 	justifyContent: "space-between",
 	padding: "8px 15px 15px 15px",
 });
-
-const StyledRating = withStyles({
-	iconFilled: {
-		color: blue[700],
-	},
-})(Rating);
 
 interface Props {
 	kDrama: KDrama;
