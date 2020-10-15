@@ -1,11 +1,20 @@
 import React, { useState } from "react";
 import { Fab, ButtonGroup, Button, styled } from "@material-ui/core";
-import { green } from "@material-ui/core/colors";
+import { green, lightGreen } from "@material-ui/core/colors";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AddIcon from "@material-ui/icons/AddCircle";
 import FilterIcon from "@material-ui/icons/FilterList";
+import StarIcon from "@material-ui/icons/StarOutlined";
 
 import { STATUSES } from "../Constants";
+
+const RankingFab = styled(Fab)({
+	position: "fixed",
+	right: "80px",
+	bottom: "320px",
+	color: "white",
+	backgroundColor: lightGreen[600],
+});
 
 const FilterGroupFab = styled(Fab)({
 	position: "fixed",
@@ -21,15 +30,24 @@ const FilterButtonGroup = styled(ButtonGroup)({
 	bottom: "200px",
 });
 
-const FilterButton = styled(Button)({ color: green[700], borderColor: green[700] });
+const FilterButton = styled(Button)({
+	color: green[700],
+	borderColor: green[700],
+});
 
 interface Props {
 	logOut: () => Promise<void>;
-	handleOpen: () => void;
+	handleFormOpen: () => void;
+	handleRankingOpen: () => void;
 	setFilter: (status: string | null) => void;
 }
 
-const FabGroup: React.FC<Props> = ({ logOut, handleOpen, setFilter }) => {
+const FabGroup: React.FC<Props> = ({
+	logOut,
+	handleFormOpen,
+	handleRankingOpen,
+	setFilter,
+}) => {
 	const [showFilterList, setShowFilterList] = useState<boolean>(false);
 
 	const handleClick = (status: string | null) => {
@@ -43,6 +61,9 @@ const FabGroup: React.FC<Props> = ({ logOut, handleOpen, setFilter }) => {
 
 	return (
 		<>
+			<RankingFab onClick={handleRankingOpen}>
+				<StarIcon />
+			</RankingFab>
 			<FilterGroupFab onClick={toggleFilterList}>
 				<FilterIcon />
 			</FilterGroupFab>
@@ -63,7 +84,7 @@ const FabGroup: React.FC<Props> = ({ logOut, handleOpen, setFilter }) => {
 			<Fab
 				style={{ position: "fixed", right: "80px", bottom: "160px" }}
 				color="secondary"
-				onClick={handleOpen}
+				onClick={handleFormOpen}
 			>
 				<AddIcon />
 			</Fab>

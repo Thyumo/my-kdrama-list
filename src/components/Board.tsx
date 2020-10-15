@@ -15,6 +15,7 @@ import KDramaList from "./DramaList";
 import MainCard from "./MainCard";
 import FabGroup from "./FabGroup";
 import AddKDramaForm from "./AddKDramaForm";
+import Ranking from "./Ranking";
 
 const StyledBackgroundGrid = styled(Grid)({
 	background:
@@ -29,7 +30,8 @@ const Board: React.FC = () => {
 		({ status }) => status === STATUSES.WATCHING || status === STATUSES.PLANNED
 	);
 	const [displayedKDrama, setDisplayedKDrama] = useState<KDrama | undefined>();
-	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
+	const [isRankingOpen, setIsRankingOpen] = useState<boolean>(false);
 	const [statusFilter, setStatusFilter] = useState<string | null>(null);
 	const filteredKDramas = useMemo(
 		() =>
@@ -162,13 +164,19 @@ const Board: React.FC = () => {
 			/>
 			<FabGroup
 				setFilter={setStatusFilter}
-				handleOpen={() => setIsOpen(true)}
+				handleFormOpen={() => setIsFormOpen(true)}
+				handleRankingOpen={() => setIsRankingOpen(true)}
 				logOut={logOut}
 			/>
 			<AddKDramaForm
 				addKDrama={handleSubmit}
-				handleClose={() => setIsOpen(false)}
-				isOpen={isOpen}
+				handleClose={() => setIsFormOpen(false)}
+				isOpen={isFormOpen}
+			/>
+			<Ranking
+				handleClose={() => setIsRankingOpen(false)}
+				isOpen={isRankingOpen}
+				kDramas={kDramas}
 			/>
 		</StyledBackgroundGrid>
 	);
