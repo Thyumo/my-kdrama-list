@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/my-kdrama-list/static/css/main.5ecd60fb.chunk.css",
-    "main.js": "/my-kdrama-list/static/js/main.728769b4.chunk.js",
-    "main.js.map": "/my-kdrama-list/static/js/main.728769b4.chunk.js.map",
+    "main.js": "/my-kdrama-list/static/js/main.ddbe9bc4.chunk.js",
+    "main.js.map": "/my-kdrama-list/static/js/main.ddbe9bc4.chunk.js.map",
     "runtime-main.js": "/my-kdrama-list/static/js/runtime-main.172adaf8.js",
     "runtime-main.js.map": "/my-kdrama-list/static/js/runtime-main.172adaf8.js.map",
-    "static/js/2.305bc019.chunk.js": "/my-kdrama-list/static/js/2.305bc019.chunk.js",
-    "static/js/2.305bc019.chunk.js.map": "/my-kdrama-list/static/js/2.305bc019.chunk.js.map",
+    "static/js/2.c335fcf4.chunk.js": "/my-kdrama-list/static/js/2.c335fcf4.chunk.js",
+    "static/js/2.c335fcf4.chunk.js.map": "/my-kdrama-list/static/js/2.c335fcf4.chunk.js.map",
     "index.html": "/my-kdrama-list/index.html",
-    "precache-manifest.7b9905696c58850f9cf31150b7ad759b.js": "/my-kdrama-list/precache-manifest.7b9905696c58850f9cf31150b7ad759b.js",
+    "precache-manifest.07591d602c4b9cbc60542a16727a0cd3.js": "/my-kdrama-list/precache-manifest.07591d602c4b9cbc60542a16727a0cd3.js",
     "service-worker.js": "/my-kdrama-list/service-worker.js",
     "static/css/main.5ecd60fb.chunk.css.map": "/my-kdrama-list/static/css/main.5ecd60fb.chunk.css.map",
-    "static/js/2.305bc019.chunk.js.LICENSE.txt": "/my-kdrama-list/static/js/2.305bc019.chunk.js.LICENSE.txt"
+    "static/js/2.c335fcf4.chunk.js.LICENSE.txt": "/my-kdrama-list/static/js/2.c335fcf4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.172adaf8.js",
-    "static/js/2.305bc019.chunk.js",
+    "static/js/2.c335fcf4.chunk.js",
     "static/css/main.5ecd60fb.chunk.css",
-    "static/js/main.728769b4.chunk.js"
+    "static/js/main.ddbe9bc4.chunk.js"
   ]
 }
