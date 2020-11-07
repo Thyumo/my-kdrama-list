@@ -57,6 +57,14 @@ const MainCard: React.FC<Props> = ({
 		setEpisodes(kDrama._id, kDrama.totalEpisodes);
 	};
 
+	const handleIncreaseEpisodes = () => {
+		if (kDrama.status === STATUSES.PLANNED) {
+			handleStart();
+		} else {
+			setEpisodes(kDrama._id, (kDrama.currentEpisode || 0) + 1);
+		}
+	};
+
 	const ACTIONS: { [key: string]: () => void } = {
 		watching: handleComplete,
 		completed: () => {},
@@ -94,9 +102,7 @@ const MainCard: React.FC<Props> = ({
 							{ACTIONS_TEXT[kDrama.status]}
 						</Button>
 						<Button
-							onClick={() =>
-								setEpisodes(kDrama._id, (kDrama.currentEpisode || 0) + 1)
-							}
+							onClick={handleIncreaseEpisodes}
 							variant="outlined"
 							color="primary"
 						>
