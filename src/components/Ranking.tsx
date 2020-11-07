@@ -35,7 +35,7 @@ const Ranking: React.FC<Props> = ({ kDramas, isOpen, handleClose }) => (
 				.filter(({ rating }) => rating && rating !== 0)
 				.sort((a, b) => b.rating! - a.rating!)
 				.map(({ title, rating, image }, index) => (
-					<TableRow>
+					<TableRow key={index}>
 						<TableCell>
 							<Typography variant="h4">{index + 1}</Typography>
 						</TableCell>
