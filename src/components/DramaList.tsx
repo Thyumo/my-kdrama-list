@@ -1,17 +1,10 @@
 import React, { useState } from "react";
-import {
-	Avatar,
-	Grid,
-	Tooltip,
-	withStyles,
-	Fab,
-	styled,
-} from "@material-ui/core";
-import QuestionMarkIcon from "@material-ui/icons/Help";
+import { Grid, Tooltip, withStyles, Fab, styled } from "@material-ui/core";
 import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 
 import { KDrama } from "../types";
+import SizedAvatar from "./SizedAvatar";
 
 interface Props {
 	list: KDrama[];
@@ -24,11 +17,6 @@ const TitleTooltip = withStyles(() => ({
 		fontSize: 20,
 	},
 }))(Tooltip);
-
-const BigAvatar = styled(Avatar)({
-	height: 150,
-	width: 150,
-});
 
 const StyledInnerGrid = styled(Grid)({
 	marginTop: 30,
@@ -78,16 +66,11 @@ const DramaList: React.FC<Props> = ({ list, setDisplayedKDrama }) => {
 			<StyledInnerGrid container direction="row" justify="space-evenly">
 				{displayedDramas.map((kDrama) => (
 					<TitleTooltip key={kDrama._id} title={kDrama.title}>
-						{kDrama.image ? (
-							<BigAvatar
-								onClick={() => handleClick(kDrama)}
-								src={kDrama.image}
-							/>
-						) : (
-							<BigAvatar>
-								<QuestionMarkIcon style={{ fontSize: "150px" }} />
-							</BigAvatar>
-						)}
+						<SizedAvatar
+							size={150}
+							image={kDrama.image}
+							onClick={() => handleClick(kDrama)}
+						/>
 					</TitleTooltip>
 				))}
 			</StyledInnerGrid>
