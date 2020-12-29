@@ -32,6 +32,7 @@ const Board: React.FC = () => {
   const [displayedKDrama, setDisplayedKDrama] = useState<KDrama | undefined>();
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
   const [isRankingOpen, setIsRankingOpen] = useState<boolean>(false);
+  const [currentListPage, setCurrentListPage] = useState<number>(0);
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
   const filteredKDramas = useMemo(
     () =>
@@ -160,12 +161,15 @@ const Board: React.FC = () => {
       <KDramaList
         setDisplayedKDrama={setDisplayedKDrama}
         list={filteredKDramas}
+        currentPage={currentListPage}
+        setCurrentPage={setCurrentListPage}
         isLoading={loading}
       />
       <FabGroup
         setFilter={setStatusFilter}
         handleFormOpen={() => setIsFormOpen(true)}
         handleRankingOpen={() => setIsRankingOpen(true)}
+        resetPage={() => setCurrentListPage(0)}
         logOut={logOut}
       />
       <AddKDramaForm
