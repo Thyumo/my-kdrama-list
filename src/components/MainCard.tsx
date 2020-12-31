@@ -58,7 +58,8 @@ const MainCard: React.FC<Props> = ({
   };
 
   const handleIncreaseEpisodes = () => {
-    if (kDrama.currentEpisode || 0 >= kDrama.totalEpisodes) return;
+    if (kDrama.currentEpisode && kDrama.currentEpisode >= kDrama.totalEpisodes)
+      return;
     if (kDrama.status === STATUSES.PLANNED) {
       handleStart();
     } else {

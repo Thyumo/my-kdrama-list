@@ -78,6 +78,7 @@ const Board: React.FC = () => {
         currentKDramas[
           currentKDramas.findIndex(({ _id }) => _id === updatedKDrama._id)
         ] = updatedKDrama;
+        setDisplayedKDrama(updatedKDrama);
         setKDramas(currentKDramas);
       } catch (err) {
         setKDramas(currentKDramas);
