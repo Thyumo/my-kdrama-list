@@ -4,13 +4,13 @@ const STATUSES = {
   PLANNED: "planned",
 };
 
-const ACTIONS_TEXT: { [key: string]: string } = {
+const ACTIONS_TEXT: { [status: string]: string } = {
   watching: "Complete",
   completed: "Completed",
   planned: "Start Watching",
 };
 
-const STATUS_TEXT: { [key: string]: string } = {
+const STATUS_TEXT: { [status: string]: string } = {
   watching: "Currently watching",
   completed: "Completed",
   planned: "Next planned",
