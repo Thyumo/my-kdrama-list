@@ -26,9 +26,6 @@ const StyledBackgroundGrid = styled(Grid)({
 
 const Board: React.FC = () => {
   const [kDramas, setKDramas] = useState<KDrama[]>([]);
-  const watchedKDrama =
-    kDramas.find(({ status }) => status === STATUSES.WATCHING) ||
-    kDramas.find(({ status }) => status === STATUSES.PLANNED);
   const [displayedKDrama, setDisplayedKDrama] = useState<KDrama | undefined>();
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
   const [isRankingOpen, setIsRankingOpen] = useState<boolean>(false);
@@ -50,7 +47,12 @@ const Board: React.FC = () => {
   const { loading } = useGetAllKDramasQuery({
     onCompleted: (data: GetAllKDramasQuery) => {
       if (data?.kDramas) {
-        setKDramas(data.kDramas as KDrama[]);
+        const result = data.kDramas as KDrama[];
+        setKDramas(result);
+        const watchedKDrama =
+          result.find(({ status }) => status === STATUSES.WATCHING) ||
+          result.find(({ status }) => status === STATUSES.PLANNED);
+        setDisplayedKDrama(watchedKDrama);
       }
     },
   });
@@ -71,6 +73,10 @@ const Board: React.FC = () => {
     async (id: string, current: number) => {
       const currentKDramas = [...kDramas];
       try {
+        setDisplayedKDrama({
+          ...displayedKDrama!,
+          currentEpisode: current,
+        });
         const result = await setEpisodesMutation({
           variables: { id, counter: current },
         });
@@ -85,13 +91,14 @@ const Board: React.FC = () => {
         throw new Error("Couldn't increase episodes");
       }
     },
-    [kDramas, setEpisodesMutation]
+    [kDramas, displayedKDrama, setEpisodesMutation, setDisplayedKDrama]
   );
 
   const setStatus = useCallback(
     async (id: string, status: string) => {
       const currentKDramas = [...kDramas];
       try {
+        setDisplayedKDrama({ ...displayedKDrama!, status: status });
         const result = await setKDramaStatusMutation({
           variables: { id, status },
         });
@@ -99,13 +106,14 @@ const Board: React.FC = () => {
         currentKDramas[
           currentKDramas.findIndex(({ _id }) => _id === updatedKDrama._id)
         ] = updatedKDrama;
+        setDisplayedKDrama(updatedKDrama);
         setKDramas(currentKDramas);
       } catch (err) {
         setKDramas(currentKDramas);
         throw new Error("Couldn't set status");
       }
     },
-    [kDramas, setKDramaStatusMutation]
+    [kDramas, displayedKDrama, setKDramaStatusMutation, setDisplayedKDrama]
   );
 
   const setRating = useCallback(
@@ -131,25 +139,18 @@ const Board: React.FC = () => {
   const renderCard = useCallback(() => {
     if (loading) return <CircularProgress size={200} />;
 
-    if (!(watchedKDrama || displayedKDrama))
+    if (!displayedKDrama)
       return <Typography variant="h2">No KDrama in Queue</Typography>;
 
     return (
       <MainCard
-        kDrama={displayedKDrama || watchedKDrama!}
+        kDrama={displayedKDrama}
         setStatus={setStatus}
         setEpisodes={setEpisodes}
         setRating={setRating}
       />
     );
-  }, [
-    loading,
-    watchedKDrama,
-    displayedKDrama,
-    setStatus,
-    setEpisodes,
-    setRating,
-  ]);
+  }, [loading, displayedKDrama, setStatus, setEpisodes, setRating]);
 
   return (
     <StyledBackgroundGrid
