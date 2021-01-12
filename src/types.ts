@@ -365,6 +365,19 @@ export type AddKDramaMutation = (
   )> }
 );
 
+export type DeleteKDramaMutationVariables = Exact<{
+  id: Scalars['ObjectId'];
+}>;
+
+
+export type DeleteKDramaMutation = (
+  { __typename?: 'Mutation' }
+  & { kDrama?: Maybe<(
+    { __typename?: 'KDrama' }
+    & Pick<KDrama, '_id'>
+  )> }
+);
+
 export type SetKDramaStatusMutationVariables = Exact<{
   id: Scalars['ObjectId'];
   status: Scalars['String'];

@@ -80,6 +80,38 @@ export function useAddKDramaMutation(baseOptions?: ApolloReactHooks.MutationHook
 export type AddKDramaMutationHookResult = ReturnType<typeof useAddKDramaMutation>;
 export type AddKDramaMutationResult = ApolloReactCommon.MutationResult<Types.AddKDramaMutation>;
 export type AddKDramaMutationOptions = ApolloReactCommon.BaseMutationOptions<Types.AddKDramaMutation, Types.AddKDramaMutationVariables>;
+export const DeleteKDramaDocument = gql`
+    mutation DeleteKDrama($id: ObjectId!) {
+  kDrama: deleteOneKDrama(query: {_id: $id}) {
+    _id
+  }
+}
+    `;
+export type DeleteKDramaMutationFn = ApolloReactCommon.MutationFunction<Types.DeleteKDramaMutation, Types.DeleteKDramaMutationVariables>;
+
+/**
+ * __useDeleteKDramaMutation__
+ *
+ * To run a mutation, you first call `useDeleteKDramaMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteKDramaMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteKDramaMutation, { data, loading, error }] = useDeleteKDramaMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteKDramaMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.DeleteKDramaMutation, Types.DeleteKDramaMutationVariables>) {
+        return ApolloReactHooks.useMutation<Types.DeleteKDramaMutation, Types.DeleteKDramaMutationVariables>(DeleteKDramaDocument, baseOptions);
+      }
+export type DeleteKDramaMutationHookResult = ReturnType<typeof useDeleteKDramaMutation>;
+export type DeleteKDramaMutationResult = ApolloReactCommon.MutationResult<Types.DeleteKDramaMutation>;
+export type DeleteKDramaMutationOptions = ApolloReactCommon.BaseMutationOptions<Types.DeleteKDramaMutation, Types.DeleteKDramaMutationVariables>;
 export const SetKDramaStatusDocument = gql`
     mutation SetKDramaStatus($id: ObjectId!, $status: String!) {
   kDrama: updateOneKDrama(query: {_id: $id}, set: {status: $status}) {

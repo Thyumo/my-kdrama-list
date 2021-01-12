@@ -8,6 +8,7 @@ import {
   useSetKDramaStatusMutation,
   useSetEpisodesMutation,
   useSetRatingMutation,
+  useDeleteKDramaMutation,
 } from "../graphql-operations";
 import { GetAllKDramasQuery, KDrama, KDramaInsertInput } from "../types";
 import { STATUSES } from "../Constants";
@@ -41,6 +42,7 @@ const Board: React.FC = () => {
 
   const { logOut } = useRealmApp();
   const [addKDramaMutation] = useAddKDramaMutation();
+  const [deleteKDramaMutation] = useDeleteKDramaMutation();
   const [setKDramaStatusMutation] = useSetKDramaStatusMutation();
   const [setEpisodesMutation] = useSetEpisodesMutation();
   const [setRatingMutation] = useSetRatingMutation();
@@ -66,6 +68,24 @@ const Board: React.FC = () => {
     } catch (err) {
       setKDramas(currentKDramas);
       throw new Error("Couldn't add new KDrama");
+    }
+  };
+
+  const handleDelete = async () => {
+    const currentKDramas = [...kDramas];
+    try {
+      const result = await deleteKDramaMutation({
+        variables: { id: displayedKDrama?._id },
+      });
+      const deleted = result.data?.kDrama as KDrama;
+      setKDramas([...currentKDramas.filter(({ _id }) => _id !== deleted._id)]);
+      setDisplayedKDrama(
+        currentKDramas.find(({ status }) => status === STATUSES.WATCHING) ||
+          currentKDramas.find(({ status }) => status === STATUSES.PLANNED)
+      );
+    } catch (err) {
+      setKDramas(currentKDramas);
+      throw new Error("Couldn't delete KDrama");
     }
   };
 
@@ -169,6 +189,7 @@ const Board: React.FC = () => {
       />
       <FabGroup
         setFilter={setStatusFilter}
+        deleteKDrama={handleDelete}
         handleFormOpen={() => setIsFormOpen(true)}
         handleRankingOpen={() => setIsRankingOpen(true)}
         resetPage={() => setCurrentListPage(0)}

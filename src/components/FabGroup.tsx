@@ -5,6 +5,8 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AddIcon from "@material-ui/icons/AddCircle";
 import FilterIcon from "@material-ui/icons/FilterList";
 import StarIcon from "@material-ui/icons/StarOutlined";
+import DeleteIcon from "@material-ui/icons/Delete";
+import SettingsIcon from "@material-ui/icons/Settings";
 
 import { STATUSES } from "../Constants";
 
@@ -37,6 +39,7 @@ const FilterButton = styled(Button)({
 
 interface Props {
   logOut: () => Promise<void>;
+  deleteKDrama: () => void;
   handleFormOpen: () => void;
   handleRankingOpen: () => void;
   setFilter: (status: string | null) => void;
@@ -45,12 +48,14 @@ interface Props {
 
 const FabGroup: React.FC<Props> = ({
   logOut,
+  deleteKDrama,
   handleFormOpen,
   handleRankingOpen,
   setFilter,
   resetPage,
 }) => {
   const [showFilterList, setShowFilterList] = useState<boolean>(false);
+  const [showSettings, setShowSettings] = useState<boolean>(false);
 
   const handleClick = (status: string | null) => {
     setFilter(status);
@@ -60,6 +65,10 @@ const FabGroup: React.FC<Props> = ({
 
   const toggleFilterList = () => {
     setShowFilterList(!showFilterList);
+  };
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
   };
 
   return (
@@ -94,10 +103,28 @@ const FabGroup: React.FC<Props> = ({
       <Fab
         style={{ position: "fixed", right: "80px", bottom: "80px" }}
         color="primary"
-        onClick={() => logOut()}
+        onClick={toggleSettings}
       >
-        <ExitToAppIcon />
+        <SettingsIcon />
       </Fab>
+      {showSettings && (
+        <>
+          <Fab
+            style={{ position: "fixed", right: "160px", bottom: "80px" }}
+            color="primary"
+            onClick={() => logOut()}
+          >
+            <ExitToAppIcon />
+          </Fab>
+          <Fab
+            style={{ position: "fixed", right: "240px", bottom: "80px" }}
+            color="primary"
+            onClick={deleteKDrama}
+          >
+            <DeleteIcon />
+          </Fab>
+        </>
+      )}
     </>
   );
 };

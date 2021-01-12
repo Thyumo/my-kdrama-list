@@ -1,71 +1,83 @@
 query GetAllKDramas {
-	kDramas {
-		_id
-		title
-		image
-		status
-		totalEpisodes
-		currentEpisode
-		rating
-	}
+  kDramas {
+    _id
+    title
+    image
+    status
+    totalEpisodes
+    currentEpisode
+    rating
+  }
 }
 
 mutation AddKDrama($kDrama: KDramaInsertInput!) {
-	kDrama: insertOneKDrama(data: $kDrama) {
-		_id
-		title
-		image
-		status
-		totalEpisodes
-		currentEpisode
-		rating
-	}
+  kDrama: insertOneKDrama(data: $kDrama) {
+    _id
+    title
+    image
+    status
+    totalEpisodes
+    currentEpisode
+    rating
+  }
+}
+
+mutation DeleteKDrama($id: ObjectId!) {
+  kDrama: deleteOneKDrama(query: { _id: $id }) {
+    _id
+  }
 }
 
 mutation SetKDramaStatus($id: ObjectId!, $status: String!) {
-  kDrama: updateOneKDrama(query: { _id: $id }, set: { status: $status } ) {
-		_id
-		title
-		image
-		status
-		totalEpisodes
-		currentEpisode
-		rating
+  kDrama: updateOneKDrama(query: { _id: $id }, set: { status: $status }) {
+    _id
+    title
+    image
+    status
+    totalEpisodes
+    currentEpisode
+    rating
   }
 }
 
 mutation StartKDrama($id: ObjectId!) {
-	kDrama: updateOneKDrama(query: { _id: $id }, set: { status: "watching", currentEpisode: 1 } ) {
-		_id
-		title
-		image
-		status
-		totalEpisodes
-		currentEpisode
-		rating
-	}
+  kDrama: updateOneKDrama(
+    query: { _id: $id }
+    set: { status: "watching", currentEpisode: 1 }
+  ) {
+    _id
+    title
+    image
+    status
+    totalEpisodes
+    currentEpisode
+    rating
+  }
 }
 
 mutation SetEpisodes($id: ObjectId!, $counter: Float!) {
-	kDrama: updateOneKDrama(query: { _id: $id }, set: { currentEpisode: $counter } ) {
-		_id
-		title
-		image
-		status
-		totalEpisodes
-		currentEpisode
-		rating
-	}
+  kDrama: updateOneKDrama(
+    query: { _id: $id }
+    set: { currentEpisode: $counter }
+  ) {
+    _id
+    title
+    image
+    status
+    totalEpisodes
+    currentEpisode
+    rating
+  }
 }
 
 mutation SetRating($id: ObjectId!, $rating: Float!) {
-	kDrama: updateOneKDrama(query: { _id: $id }, set: { rating: $rating } ) {
-		_id
-		title
-		image
-		status
-		totalEpisodes
-		currentEpisode
-		rating
-	}
+  kDrama: updateOneKDrama(query: { _id: $id }, set: { rating: $rating }) {
+    _id
+    title
+    image
+    status
+    totalEpisodes
+    currentEpisode
+    rating
+  }
 }
