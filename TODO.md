@@ -7,3 +7,4 @@
 - Find data api?
 - Input form validation
 - Optimistic rendering
+- Add changelog and release
