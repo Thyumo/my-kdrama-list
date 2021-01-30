@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/my-kdrama-list/precache-manifest.31abdf23bf54eb70a15b2eaf80ed7c6a.js"
+  "/my-kdrama-list/precache-manifest.039481537b8e95b87ada9d8997de204c.js"
 );
 
 self.addEventListener('message', (event) => {
