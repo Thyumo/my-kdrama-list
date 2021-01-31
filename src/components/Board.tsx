@@ -12,9 +12,9 @@ import {
 } from "../graphql-operations";
 import { GetAllKDramasQuery, KDrama, KDramaInsertInput } from "../types";
 import { STATUSES } from "../Constants";
-import KDramaList from "./DramaList";
+import KDramaList from "./DramaList/DramaList";
 import MainCard from "./MainCard";
-import FabGroup from "./FabGroup";
+import FabGroup from "./FabGroup/FabGroup";
 import AddKDramaForm from "./AddKDramaForm/AddKDramaForm";
 import Ranking from "./Ranking";
 

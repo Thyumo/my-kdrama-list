@@ -1,10 +1,12 @@
 import React from "react";
-import { Grid, Tooltip, withStyles, Fab, styled } from "@material-ui/core";
+import { Fab } from "@material-ui/core";
 import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 
-import { KDrama } from "../types";
-import SizedAvatar from "./SizedAvatar";
+import SizedAvatar from "../SizedAvatar";
+import { TitleTooltip, StyledInnerGrid, StyledOuterGrid } from "./styled";
+
+import { KDrama } from "../../types";
 
 interface Props {
   list: KDrama[];
@@ -13,22 +15,6 @@ interface Props {
   setCurrentPage: (page: number) => void;
   isLoading: boolean;
 }
-
-const TitleTooltip = withStyles(() => ({
-  tooltip: {
-    fontSize: 20,
-  },
-}))(Tooltip);
-
-const StyledInnerGrid = styled(Grid)({
-  marginTop: 30,
-  marginBottom: 20,
-  width: 900,
-});
-
-const StyledOuterGrid = styled(Grid)({
-  width: 1020,
-});
 
 const DramaList: React.FC<Props> = ({
   list,

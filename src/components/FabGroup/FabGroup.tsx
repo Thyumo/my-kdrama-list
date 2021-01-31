@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Fab, ButtonGroup, Button, styled } from "@material-ui/core";
-import { green, lightGreen } from "@material-ui/core/colors";
+import { Fab } from "@material-ui/core";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AddIcon from "@material-ui/icons/AddCircle";
 import FilterIcon from "@material-ui/icons/FilterList";
@@ -8,34 +7,14 @@ import StarIcon from "@material-ui/icons/StarOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SettingsIcon from "@material-ui/icons/Settings";
 
-import { STATUSES } from "../Constants";
+import {
+  FilterGroupFab,
+  RankingFab,
+  FilterButtonGroup,
+  FilterButton,
+} from "./styled";
 
-const RankingFab = styled(Fab)({
-  position: "fixed",
-  right: "80px",
-  bottom: "320px",
-  color: "white",
-  backgroundColor: lightGreen[600],
-});
-
-const FilterGroupFab = styled(Fab)({
-  position: "fixed",
-  right: "80px",
-  bottom: "240px",
-  backgroundColor: green[700],
-  color: "white",
-});
-
-const FilterButtonGroup = styled(ButtonGroup)({
-  position: "fixed",
-  right: "160px",
-  bottom: "200px",
-});
-
-const FilterButton = styled(Button)({
-  color: green[700],
-  borderColor: green[700],
-});
+import { STATUSES } from "../../Constants";
 
 interface Props {
   logOut: () => Promise<void>;
