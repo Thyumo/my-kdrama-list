@@ -1,10 +1,9 @@
 import React from "react";
 import { Fab } from "@material-ui/core";
-import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
-import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 
 import SizedAvatar from "../SizedAvatar";
 import { TitleTooltip, StyledInnerGrid, StyledOuterGrid } from "./styled";
+import { ArrowLeftIcon, ArrowRightIcon } from "../icons";
 
 import { KDrama } from "../../types";
 

@@ -1,11 +1,5 @@
 import React, { useState } from "react";
 import { Fab } from "@material-ui/core";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import AddIcon from "@material-ui/icons/AddCircle";
-import FilterIcon from "@material-ui/icons/FilterList";
-import StarIcon from "@material-ui/icons/StarOutlined";
-import DeleteIcon from "@material-ui/icons/Delete";
-import SettingsIcon from "@material-ui/icons/Settings";
 
 import {
   FilterGroupFab,
@@ -13,6 +7,14 @@ import {
   FilterButtonGroup,
   FilterButton,
 } from "./styled";
+import {
+  ExitToAppIcon,
+  AddIcon,
+  FilterIcon,
+  StarIcon,
+  DeleteIcon,
+  SettingsIcon,
+} from "../icons";
 
 import { STATUSES } from "../../Constants";
 
