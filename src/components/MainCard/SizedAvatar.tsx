@@ -1,7 +1,7 @@
 import React from "react";
 import { Avatar, styled } from "@material-ui/core";
 
-import { QuestionMarkIcon } from "./icons";
+import { QuestionMarkIcon } from "../icons";
 
 interface Props {
   image: string | null | undefined;

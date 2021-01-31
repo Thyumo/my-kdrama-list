@@ -10,7 +10,7 @@ import {
   TableCell,
 } from "@material-ui/core";
 
-import StyledRating from "./StyledRating";
+import StyledRating from "./shared/StyledRating";
 import { QuestionMarkIcon } from "./icons";
 
 import { KDrama } from "../types";

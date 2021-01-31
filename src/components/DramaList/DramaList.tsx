@@ -1,7 +1,7 @@
 import React from "react";
 import { Fab } from "@material-ui/core";
 
-import SizedAvatar from "../SizedAvatar";
+import SizedAvatar from "../MainCard/SizedAvatar";
 import { TitleTooltip, StyledInnerGrid, StyledOuterGrid } from "./styled";
 import { ArrowLeftIcon, ArrowRightIcon } from "../icons";
 
