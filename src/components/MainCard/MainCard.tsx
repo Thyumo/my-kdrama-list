@@ -1,32 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { CardContent, Button, Typography } from "@material-ui/core";
+
 import {
-  Card,
-  CardContent,
-  CardActions,
-  Button,
-  Typography,
-  styled,
-} from "@material-ui/core";
+  CardImage,
+  StyledCard,
+  PaddedCardActions
+} from "./styled";
+import StyledRating from '../shared/StyledRating';
 
-import StyledRating from "./StyledRating";
-import { KDrama } from "../types";
-import { STATUSES, ACTIONS_TEXT, STATUS_TEXT } from "../Constants";
-
-const StyledCard = styled(Card)({
-  width: 800,
-  marginTop: 50,
-});
-
-const CardImage = styled("img")({
-  height: 450,
-  width: 800,
-  objectFit: "cover",
-});
-
-const PaddedCardActions = styled(CardActions)({
-  justifyContent: "space-between",
-  padding: "8px 15px 15px 15px",
-});
+import { KDrama } from "../../types";
+import { STATUSES, ACTIONS_TEXT, STATUS_TEXT } from "../../Constants";
 
 interface Props {
   kDrama: KDrama;

@@ -10,13 +10,15 @@ import {
   useSetRatingMutation,
   useDeleteKDramaMutation,
 } from "../graphql-operations";
-import { GetAllKDramasQuery, KDrama, KDramaInsertInput } from "../types";
-import { STATUSES } from "../Constants";
+
 import KDramaList from "./DramaList/DramaList";
-import MainCard from "./MainCard";
+import MainCard from "./MainCard/MainCard";
 import FabGroup from "./FabGroup/FabGroup";
 import AddKDramaForm from "./AddKDramaForm/AddKDramaForm";
 import Ranking from "./Ranking";
+
+import { GetAllKDramasQuery, KDrama, KDramaInsertInput } from "../types";
+import { STATUSES } from "../Constants";
 
 const StyledBackgroundGrid = styled(Grid)({
   background:
