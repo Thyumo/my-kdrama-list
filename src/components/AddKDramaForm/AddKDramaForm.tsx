@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import {
   Dialog,
   DialogTitle,
@@ -8,19 +7,12 @@ import {
   TextField,
   Select,
   MenuItem,
-  Button,
-  styled,
 } from "@material-ui/core";
 
-import { STATUSES } from "../Constants";
-import { KDramaInsertInput } from "../types";
+import { SubmitButton } from "./styled";
 
-const SubmitButton = styled(Button)({
-  display: "flex",
-  alignSelf: "flex-end",
-  width: "30%",
-  marginTop: 20,
-});
+import { STATUSES } from "../../Constants";
+import { KDramaInsertInput } from "../../types";
 
 interface Props {
   isOpen: boolean;

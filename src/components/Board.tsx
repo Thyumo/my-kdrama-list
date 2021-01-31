@@ -15,7 +15,7 @@ import { STATUSES } from "../Constants";
 import KDramaList from "./DramaList";
 import MainCard from "./MainCard";
 import FabGroup from "./FabGroup";
-import AddKDramaForm from "./AddKDramaForm";
+import AddKDramaForm from "./AddKDramaForm/AddKDramaForm";
 import Ranking from "./Ranking";
 
 const StyledBackgroundGrid = styled(Grid)({
