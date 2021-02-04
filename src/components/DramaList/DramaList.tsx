@@ -33,14 +33,12 @@ const DramaList: React.FC<Props> = ({
 
   const handlePreviousPage = () => {
     const previousPage = currentPage - 1;
-    if (previousPage < 0) return;
-    setCurrentPage(previousPage);
+    if (previousPage >= 0) setCurrentPage(previousPage);
   };
 
   const handleNextPage = () => {
     const nextPage = currentPage + 1;
-    if (nextPage * displayedNumber > list.length) return;
-    setCurrentPage(nextPage);
+    if (nextPage * displayedNumber < list.length) setCurrentPage(nextPage);
   };
 
   return (
