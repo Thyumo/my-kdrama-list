@@ -12,3 +12,7 @@ This is a personal project to try out MongoDB Realm and to try out different thi
 #### 1.2
 
 - Add input form validation
+
+##### 1.2.1
+
+- Fix scolling list issue
