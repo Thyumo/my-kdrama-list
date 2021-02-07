@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -23,6 +23,7 @@ interface Props {
 interface FormErrors {
   title?: string;
   episodes?: string;
+  currEp?: string;
 }
 
 const AddKDramaForm: React.FC<Props> = ({ isOpen, handleClose, addKDrama }) => {
@@ -30,6 +31,7 @@ const AddKDramaForm: React.FC<Props> = ({ isOpen, handleClose, addKDrama }) => {
   const [title, setTitle] = useState<string>("");
   const [image, setImage] = useState<string>("");
   const [totalEpisodes, setTotalEpisodes] = useState<number>(0);
+  const [currentEpisode, setCurrentEpisode] = useState<number>(0);
   const [errors, setErrors] = useState<FormErrors>();
 
   const inputData: KDramaInsertInput = {
@@ -37,23 +39,36 @@ const AddKDramaForm: React.FC<Props> = ({ isOpen, handleClose, addKDrama }) => {
     image,
     status,
     totalEpisodes,
+    currentEpisode,
   };
 
   const validate = (): boolean => {
     let isValid = true;
-    const currentErrors: FormErrors = {};
+    const newErrors: FormErrors = {};
 
     if (!title || title.length === 0) {
-      currentErrors.title = "Title must not be empty";
+      newErrors.title = "Title must not be empty";
       isValid = false;
     }
 
     if (totalEpisodes <= 0) {
-      currentErrors.episodes = "Episodes must be over 0";
+      newErrors.episodes = "Episodes must be over 0";
       isValid = false;
     }
 
-    setErrors(currentErrors);
+    if (status === STATUSES.WATCHING) {
+      if (currentEpisode <= 0) {
+        newErrors.currEp = "Current episode must be over 0";
+        isValid = false;
+      }
+      if (currentEpisode >= totalEpisodes) {
+        newErrors.currEp =
+          "Current episode must be lower than the total number of episodes";
+        isValid = false;
+      }
+    }
+
+    setErrors(newErrors);
 
     return isValid;
   };
@@ -69,6 +84,20 @@ const AddKDramaForm: React.FC<Props> = ({ isOpen, handleClose, addKDrama }) => {
       setTotalEpisodes(0);
     }
   };
+
+  useEffect(() => {
+    switch (status) {
+      case STATUSES.PLANNED:
+        setCurrentEpisode(0);
+        break;
+      case STATUSES.WATCHING:
+        setCurrentEpisode(1);
+        break;
+      case STATUSES.COMPLETED:
+        setCurrentEpisode(totalEpisodes);
+        break;
+    }
+  }, [status, totalEpisodes]);
 
   return (
     <Dialog fullWidth open={isOpen} onClose={handleClose}>
@@ -108,9 +137,18 @@ const AddKDramaForm: React.FC<Props> = ({ isOpen, handleClose, addKDrama }) => {
             onChange={(e) => setTotalEpisodes(parseInt(e.target.value))}
             type="number"
             margin="dense"
-            label="Total Episodes"
+            label="Total Episodes*"
             error={!!errors?.episodes}
             helperText={errors?.episodes}
+          />
+          <TextField
+            value={currentEpisode}
+            onChange={(e) => setCurrentEpisode(parseInt(e.target.value))}
+            type="number"
+            margin="dense"
+            label="Current Episode*"
+            error={!!errors?.currEp}
+            helperText={errors?.currEp}
           />
           <SubmitButton type="submit" color="primary" variant="outlined">
             Add
