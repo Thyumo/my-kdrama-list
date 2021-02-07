@@ -6,4 +6,3 @@
 - Find data api?
 - Add edit form and button
 - Options fab transition
-- Handle set current ep and current ep behavior depending on status
