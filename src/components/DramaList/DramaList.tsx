@@ -6,6 +6,7 @@ import { TitleTooltip, StyledInnerGrid, StyledOuterGrid } from "./styled";
 import { ArrowLeftIcon, ArrowRightIcon } from "../icons";
 
 import { KDrama } from "../../types";
+import { PAGE_SIZE } from "../../Constants";
 
 interface Props {
   list: KDrama[];
@@ -21,10 +22,9 @@ const DramaList: React.FC<Props> = ({
   setCurrentPage,
   setDisplayedKDrama,
 }) => {
-  const displayedNumber = 4;
   const displayedDramas = list.slice(
-    currentPage * displayedNumber,
-    (currentPage + 1) * displayedNumber
+    currentPage * PAGE_SIZE,
+    (currentPage + 1) * PAGE_SIZE
   );
 
   const handleClick = (kDrama: KDrama) => {
@@ -38,7 +38,7 @@ const DramaList: React.FC<Props> = ({
 
   const handleNextPage = () => {
     const nextPage = currentPage + 1;
-    if (nextPage * displayedNumber < list.length) setCurrentPage(nextPage);
+    if (nextPage * PAGE_SIZE < list.length) setCurrentPage(nextPage);
   };
 
   return (

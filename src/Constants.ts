@@ -16,4 +16,6 @@ const STATUS_TEXT: { [status: string]: string } = {
   planned: "Next planned",
 };
 
-export { STATUSES, ACTIONS_TEXT, STATUS_TEXT };
+const PAGE_SIZE = 4;
+
+export { STATUSES, ACTIONS_TEXT, STATUS_TEXT, PAGE_SIZE };

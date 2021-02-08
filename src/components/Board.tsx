@@ -18,7 +18,7 @@ import AddKDramaForm from "./AddKDramaForm/AddKDramaForm";
 import Ranking from "./Ranking";
 
 import { GetAllKDramasQuery, KDrama, KDramaInsertInput } from "../types";
-import { STATUSES } from "../Constants";
+import { PAGE_SIZE, STATUSES } from "../Constants";
 
 const StyledBackgroundGrid = styled(Grid)({
   background:
@@ -75,6 +75,10 @@ const Board: React.FC = () => {
 
   const handleDelete = async () => {
     const currentKDramas = [...kDramas];
+    const newListPage =
+      currentKDramas.length % PAGE_SIZE === 1
+        ? currentListPage - 1
+        : currentListPage;
     try {
       const result = await deleteKDramaMutation({
         variables: { id: displayedKDrama?._id },
@@ -85,6 +89,7 @@ const Board: React.FC = () => {
         currentKDramas.find(({ status }) => status === STATUSES.WATCHING) ||
           currentKDramas.find(({ status }) => status === STATUSES.PLANNED)
       );
+      setCurrentListPage(newListPage);
     } catch (err) {
       setKDramas(currentKDramas);
       throw new Error("Couldn't delete KDrama");
