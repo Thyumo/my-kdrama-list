@@ -7,6 +7,7 @@ import FilterIcon from "@material-ui/icons/FilterList";
 import StarIcon from "@material-ui/icons/StarOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SettingsIcon from "@material-ui/icons/Settings";
+import EditIcon from "@material-ui/icons/Edit";
 
 export {
   QuestionMarkIcon,
@@ -18,4 +19,5 @@ export {
   StarIcon,
   DeleteIcon,
   SettingsIcon,
+  EditIcon,
 };
