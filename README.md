@@ -24,3 +24,7 @@ This is a personal project to try out MongoDB Realm and to try out different thi
 ##### 1.3.1
 
 - Fix page behavior when deleting the only drama of the page
+
+#### 1.4 *
+
+- Change site icon
