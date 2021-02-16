@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "58fd6799d88136f66d415c7aa937c4d8",
+    "revision": "be95dd144ff2154e275f6b068b709ac9",
     "url": "/my-kdrama-list/index.html"
   },
   {
