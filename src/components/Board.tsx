@@ -31,6 +31,7 @@ const Board: React.FC = () => {
   const [kDramas, setKDramas] = useState<KDrama[]>([]);
   const [displayedKDrama, setDisplayedKDrama] = useState<KDrama | undefined>();
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isRankingOpen, setIsRankingOpen] = useState<boolean>(false);
   const [currentListPage, setCurrentListPage] = useState<number>(0);
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
@@ -60,6 +61,16 @@ const Board: React.FC = () => {
       }
     },
   });
+
+  const handleEdit = () => {
+    setIsEdit(true);
+    setIsFormOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsFormOpen(false);
+    setIsEdit(false);
+  };
 
   const handleSubmit = async (data: KDramaInsertInput) => {
     const currentKDramas = [...kDramas];
@@ -196,16 +207,18 @@ const Board: React.FC = () => {
       />
       <FabGroup
         setFilter={setStatusFilter}
-        deleteKDrama={handleDelete}
-        handleFormOpen={() => setIsFormOpen(true)}
-        handleRankingOpen={() => setIsRankingOpen(true)}
+        openAddForm={() => setIsFormOpen(true)}
+        openEditForm={handleEdit}
+        openRanking={() => setIsRankingOpen(true)}
         resetPage={() => setCurrentListPage(0)}
         logOut={logOut}
       />
       <AddKDramaForm
         addKDrama={handleSubmit}
-        handleClose={() => setIsFormOpen(false)}
+        handleClose={handleClose}
         isOpen={isFormOpen}
+        editMode={isEdit}
+        deleteKDrama={handleDelete}
       />
       <Ranking
         handleClose={() => setIsRankingOpen(false)}

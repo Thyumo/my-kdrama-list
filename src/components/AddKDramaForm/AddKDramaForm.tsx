@@ -7,9 +7,10 @@ import {
   TextField,
   Select,
   MenuItem,
+  Button,
 } from "@material-ui/core";
 
-import { SubmitButton } from "./styled";
+import { StyledButtonGroup } from "./styled";
 
 import { STATUSES } from "../../Constants";
 import { KDramaInsertInput } from "../../types";
@@ -18,6 +19,8 @@ interface Props {
   isOpen: boolean;
   handleClose: () => void;
   addKDrama: (data: KDramaInsertInput) => void;
+  editMode?: boolean;
+  deleteKDrama: () => void;
 }
 
 interface FormErrors {
@@ -26,7 +29,13 @@ interface FormErrors {
   currEp?: string;
 }
 
-const AddKDramaForm: React.FC<Props> = ({ isOpen, handleClose, addKDrama }) => {
+const AddKDramaForm: React.FC<Props> = ({
+  isOpen,
+  handleClose,
+  addKDrama,
+  editMode,
+  deleteKDrama,
+}) => {
   const [status, setStatus] = useState<string>(STATUSES.PLANNED);
   const [title, setTitle] = useState<string>("");
   const [image, setImage] = useState<string>("");
@@ -150,9 +159,16 @@ const AddKDramaForm: React.FC<Props> = ({ isOpen, handleClose, addKDrama }) => {
             error={!!errors?.currEp}
             helperText={errors?.currEp}
           />
-          <SubmitButton type="submit" color="primary" variant="outlined">
-            Add
-          </SubmitButton>
+          <StyledButtonGroup>
+            <Button type="submit" color="primary" variant="outlined">
+              {editMode ? "Edit" : "Add"}
+            </Button>
+            {editMode && (
+              <Button onClick={deleteKDrama} color="primary" variant="outlined">
+                Delete
+              </Button>
+            )}
+          </StyledButtonGroup>
         </DialogContent>
       </form>
     </Dialog>
