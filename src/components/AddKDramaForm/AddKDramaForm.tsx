@@ -13,13 +13,14 @@ import {
 import { StyledButtonGroup } from "./styled";
 
 import { STATUSES } from "../../Constants";
-import { KDramaInsertInput } from "../../types";
+import { KDramaInsertInput, KDrama } from "../../types";
 
 interface Props {
   isOpen: boolean;
   handleClose: () => void;
   addKDrama: (data: KDramaInsertInput) => void;
   editMode?: boolean;
+  editedKDrama?: KDrama;
   deleteKDrama: () => void;
 }
 
@@ -34,6 +35,7 @@ const AddKDramaForm: React.FC<Props> = ({
   handleClose,
   addKDrama,
   editMode,
+  editedKDrama,
   deleteKDrama,
 }) => {
   const [status, setStatus] = useState<string>(STATUSES.PLANNED);
@@ -42,6 +44,16 @@ const AddKDramaForm: React.FC<Props> = ({
   const [totalEpisodes, setTotalEpisodes] = useState<number>(0);
   const [currentEpisode, setCurrentEpisode] = useState<number>(0);
   const [errors, setErrors] = useState<FormErrors>();
+
+  useEffect(() => {
+    if (editMode) {
+      setStatus(editedKDrama?.status || "");
+      setTitle(editedKDrama?.title || "");
+      setImage(editedKDrama?.image || "");
+      setTotalEpisodes(editedKDrama?.totalEpisodes || 0);
+      setCurrentEpisode(editedKDrama?.currentEpisode || 0);
+    }
+  }, [editMode, editedKDrama]);
 
   const inputData: KDramaInsertInput = {
     title,

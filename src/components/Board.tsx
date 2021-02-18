@@ -218,6 +218,7 @@ const Board: React.FC = () => {
         handleClose={handleClose}
         isOpen={isFormOpen}
         editMode={isEdit}
+        editedKDrama={isEdit ? displayedKDrama : undefined}
         deleteKDrama={handleDelete}
       />
       <Ranking
