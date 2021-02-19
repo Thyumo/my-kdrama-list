@@ -7,17 +7,22 @@ import {
   TextField,
   Select,
   MenuItem,
+  Button,
 } from "@material-ui/core";
 
-import { SubmitButton } from "./styled";
+import { StyledButtonGroup } from "./styled";
 
 import { STATUSES } from "../../Constants";
-import { KDramaInsertInput } from "../../types";
+import { KDramaInsertInput, KDrama, KDramaUpdateInput } from "../../types";
 
 interface Props {
   isOpen: boolean;
   handleClose: () => void;
   addKDrama: (data: KDramaInsertInput) => void;
+  editMode?: boolean;
+  editedKDrama?: KDrama;
+  updateKDrama: (data: KDramaUpdateInput) => void;
+  deleteKDrama: () => void;
 }
 
 interface FormErrors {
@@ -26,7 +31,15 @@ interface FormErrors {
   currEp?: string;
 }
 
-const AddKDramaForm: React.FC<Props> = ({ isOpen, handleClose, addKDrama }) => {
+const AddKDramaForm: React.FC<Props> = ({
+  isOpen,
+  handleClose,
+  addKDrama,
+  editMode,
+  editedKDrama,
+  updateKDrama,
+  deleteKDrama,
+}) => {
   const [status, setStatus] = useState<string>(STATUSES.PLANNED);
   const [title, setTitle] = useState<string>("");
   const [image, setImage] = useState<string>("");
@@ -34,7 +47,17 @@ const AddKDramaForm: React.FC<Props> = ({ isOpen, handleClose, addKDrama }) => {
   const [currentEpisode, setCurrentEpisode] = useState<number>(0);
   const [errors, setErrors] = useState<FormErrors>();
 
-  const inputData: KDramaInsertInput = {
+  useEffect(() => {
+    if (editMode) {
+      setStatus(editedKDrama?.status || "");
+      setTitle(editedKDrama?.title || "");
+      setImage(editedKDrama?.image || "");
+      setTotalEpisodes(editedKDrama?.totalEpisodes || 0);
+      setCurrentEpisode(editedKDrama?.currentEpisode || 0);
+    }
+  }, [editMode, editedKDrama]);
+
+  const inputData = {
     title,
     image,
     status,
@@ -76,7 +99,11 @@ const AddKDramaForm: React.FC<Props> = ({ isOpen, handleClose, addKDrama }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      addKDrama(inputData);
+      if (editMode) {
+        updateKDrama(inputData)
+      } else {
+        addKDrama(inputData);
+      }
       handleClose();
       setStatus(STATUSES.PLANNED);
       setTitle("");
@@ -150,9 +177,16 @@ const AddKDramaForm: React.FC<Props> = ({ isOpen, handleClose, addKDrama }) => {
             error={!!errors?.currEp}
             helperText={errors?.currEp}
           />
-          <SubmitButton type="submit" color="primary" variant="outlined">
-            Add
-          </SubmitButton>
+          <StyledButtonGroup>
+            <Button type="submit" color="primary" variant="outlined">
+              {editMode ? "Edit" : "Add"}
+            </Button>
+            {editMode && (
+              <Button onClick={deleteKDrama} color="primary" variant="outlined">
+                Delete
+              </Button>
+            )}
+          </StyledButtonGroup>
         </DialogContent>
       </form>
     </Dialog>

@@ -9,6 +9,7 @@ import {
   useSetEpisodesMutation,
   useSetRatingMutation,
   useDeleteKDramaMutation,
+  useUpdateKDramaMutation,
 } from "../graphql-operations";
 
 import KDramaList from "./DramaList/DramaList";
@@ -17,8 +18,14 @@ import FabGroup from "./FabGroup/FabGroup";
 import AddKDramaForm from "./AddKDramaForm/AddKDramaForm";
 import Ranking from "./Ranking";
 
-import { GetAllKDramasQuery, KDrama, KDramaInsertInput } from "../types";
+import {
+  GetAllKDramasQuery,
+  KDrama,
+  KDramaInsertInput,
+  KDramaUpdateInput,
+} from "../types";
 import { PAGE_SIZE, STATUSES } from "../Constants";
+import { replaceKDrama } from "../utils";
 
 const StyledBackgroundGrid = styled(Grid)({
   background:
@@ -31,6 +38,7 @@ const Board: React.FC = () => {
   const [kDramas, setKDramas] = useState<KDrama[]>([]);
   const [displayedKDrama, setDisplayedKDrama] = useState<KDrama | undefined>();
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isRankingOpen, setIsRankingOpen] = useState<boolean>(false);
   const [currentListPage, setCurrentListPage] = useState<number>(0);
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
@@ -44,6 +52,7 @@ const Board: React.FC = () => {
 
   const { logOut } = useRealmApp();
   const [addKDramaMutation] = useAddKDramaMutation();
+  const [updateKDramaMutation] = useUpdateKDramaMutation();
   const [deleteKDramaMutation] = useDeleteKDramaMutation();
   const [setKDramaStatusMutation] = useSetKDramaStatusMutation();
   const [setEpisodesMutation] = useSetEpisodesMutation();
@@ -61,7 +70,17 @@ const Board: React.FC = () => {
     },
   });
 
-  const handleSubmit = async (data: KDramaInsertInput) => {
+  const handleEdit = () => {
+    setIsEdit(true);
+    setIsFormOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsFormOpen(false);
+    setIsEdit(false);
+  };
+
+  const handleAdd = async (data: KDramaInsertInput) => {
     const currentKDramas = [...kDramas];
     try {
       const result = await addKDramaMutation({ variables: { kDrama: data } });
@@ -70,6 +89,21 @@ const Board: React.FC = () => {
     } catch (err) {
       setKDramas(currentKDramas);
       throw new Error("Couldn't add new KDrama");
+    }
+  };
+
+  const handleUpdate = async (data: KDramaUpdateInput) => {
+    const currentKDramas = [...kDramas];
+    try {
+      const result = await updateKDramaMutation({
+        variables: { id: displayedKDrama?._id, kDrama: data },
+      });
+      const updatedKDrama = result.data?.kDrama as KDrama;
+      setDisplayedKDrama(updatedKDrama);
+      setKDramas(replaceKDrama(updatedKDrama, currentKDramas));
+    } catch (err) {
+      setKDramas(currentKDramas);
+      throw new Error("Couldn't update KDrama");
     }
   };
 
@@ -196,16 +230,20 @@ const Board: React.FC = () => {
       />
       <FabGroup
         setFilter={setStatusFilter}
-        deleteKDrama={handleDelete}
-        handleFormOpen={() => setIsFormOpen(true)}
-        handleRankingOpen={() => setIsRankingOpen(true)}
+        openAddForm={() => setIsFormOpen(true)}
+        openEditForm={handleEdit}
+        openRanking={() => setIsRankingOpen(true)}
         resetPage={() => setCurrentListPage(0)}
         logOut={logOut}
       />
       <AddKDramaForm
-        addKDrama={handleSubmit}
-        handleClose={() => setIsFormOpen(false)}
+        addKDrama={handleAdd}
+        updateKDrama={handleUpdate}
+        handleClose={handleClose}
         isOpen={isFormOpen}
+        editMode={isEdit}
+        editedKDrama={isEdit ? displayedKDrama : undefined}
+        deleteKDrama={handleDelete}
       />
       <Ranking
         handleClose={() => setIsRankingOpen(false)}

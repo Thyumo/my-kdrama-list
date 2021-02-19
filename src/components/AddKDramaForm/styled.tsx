@@ -1,10 +1,9 @@
-import { Button, styled } from "@material-ui/core";
+import { ButtonGroup, styled } from "@material-ui/core";
 
-const SubmitButton = styled(Button)({
+const StyledButtonGroup = styled(ButtonGroup)({
   display: "flex",
   alignSelf: "flex-end",
-  width: "30%",
   marginTop: 20,
 });
 
-export { SubmitButton };
+export { StyledButtonGroup };

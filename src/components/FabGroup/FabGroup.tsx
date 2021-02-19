@@ -12,28 +12,28 @@ import {
   AddIcon,
   FilterIcon,
   StarIcon,
-  DeleteIcon,
   SettingsIcon,
+  EditIcon,
 } from "../icons";
 
 import { STATUSES } from "../../Constants";
 
 interface Props {
   logOut: () => Promise<void>;
-  deleteKDrama: () => void;
-  handleFormOpen: () => void;
-  handleRankingOpen: () => void;
+  openAddForm: () => void;
+  openRanking: () => void;
   setFilter: (status: string | null) => void;
   resetPage: () => void;
+  openEditForm: () => void;
 }
 
 const FabGroup: React.FC<Props> = ({
   logOut,
-  deleteKDrama,
-  handleFormOpen,
-  handleRankingOpen,
+  openAddForm,
+  openRanking,
   setFilter,
   resetPage,
+  openEditForm,
 }) => {
   const [showFilterList, setShowFilterList] = useState<boolean>(false);
   const [showSettings, setShowSettings] = useState<boolean>(false);
@@ -54,7 +54,7 @@ const FabGroup: React.FC<Props> = ({
 
   return (
     <>
-      <RankingFab onClick={handleRankingOpen}>
+      <RankingFab onClick={openRanking}>
         <StarIcon />
       </RankingFab>
       <FilterGroupFab onClick={toggleFilterList}>
@@ -77,7 +77,7 @@ const FabGroup: React.FC<Props> = ({
       <Fab
         style={{ position: "fixed", right: "80px", bottom: "160px" }}
         color="secondary"
-        onClick={handleFormOpen}
+        onClick={openAddForm}
       >
         <AddIcon />
       </Fab>
@@ -100,9 +100,9 @@ const FabGroup: React.FC<Props> = ({
           <Fab
             style={{ position: "fixed", right: "240px", bottom: "80px" }}
             color="primary"
-            onClick={deleteKDrama}
+            onClick={openEditForm}
           >
-            <DeleteIcon />
+            <EditIcon />
           </Fab>
         </>
       )}
