@@ -13,7 +13,7 @@ import {
 import { StyledButtonGroup } from "./styled";
 
 import { STATUSES } from "../../Constants";
-import { KDramaInsertInput, KDrama } from "../../types";
+import { KDramaInsertInput, KDrama, KDramaUpdateInput } from "../../types";
 
 interface Props {
   isOpen: boolean;
@@ -21,6 +21,7 @@ interface Props {
   addKDrama: (data: KDramaInsertInput) => void;
   editMode?: boolean;
   editedKDrama?: KDrama;
+  updateKDrama: (data: KDramaUpdateInput) => void;
   deleteKDrama: () => void;
 }
 
@@ -36,6 +37,7 @@ const AddKDramaForm: React.FC<Props> = ({
   addKDrama,
   editMode,
   editedKDrama,
+  updateKDrama,
   deleteKDrama,
 }) => {
   const [status, setStatus] = useState<string>(STATUSES.PLANNED);
@@ -55,7 +57,7 @@ const AddKDramaForm: React.FC<Props> = ({
     }
   }, [editMode, editedKDrama]);
 
-  const inputData: KDramaInsertInput = {
+  const inputData = {
     title,
     image,
     status,
@@ -97,7 +99,11 @@ const AddKDramaForm: React.FC<Props> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      addKDrama(inputData);
+      if (editMode) {
+        updateKDrama(inputData)
+      } else {
+        addKDrama(inputData);
+      }
       handleClose();
       setStatus(STATUSES.PLANNED);
       setTitle("");
