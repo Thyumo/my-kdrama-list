@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "be95dd144ff2154e275f6b068b709ac9",
+    "revision": "9808276771e832ca10b13c5916003932",
     "url": "/my-kdrama-list/index.html"
   },
   {
-    "revision": "0dc9cc653da65e1e93e5",
+    "revision": "748f17509f3b9849fba0",
     "url": "/my-kdrama-list/static/css/main.5ecd60fb.chunk.css"
   },
   {
-    "revision": "2bf020447d8398dbf676",
-    "url": "/my-kdrama-list/static/js/2.19f8115f.chunk.js"
+    "revision": "783c056d7d11d6680584",
+    "url": "/my-kdrama-list/static/js/2.6356cb0d.chunk.js"
   },
   {
     "revision": "1e969f6aeaeb3ba554c0bba252bfb22c",
-    "url": "/my-kdrama-list/static/js/2.19f8115f.chunk.js.LICENSE.txt"
+    "url": "/my-kdrama-list/static/js/2.6356cb0d.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "0dc9cc653da65e1e93e5",
-    "url": "/my-kdrama-list/static/js/main.faf3bb07.chunk.js"
+    "revision": "748f17509f3b9849fba0",
+    "url": "/my-kdrama-list/static/js/main.435b06ad.chunk.js"
   },
   {
     "revision": "f456a9fb6442766a47c8",
