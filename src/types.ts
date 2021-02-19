@@ -435,7 +435,7 @@ export type SetRatingMutation = (
 
 export type UpdateKDramaMutationVariables = Exact<{
   id: Scalars['ObjectId'];
-  kdrama: KDramaUpdateInput;
+  kDrama: KDramaUpdateInput;
 }>;
 
 
