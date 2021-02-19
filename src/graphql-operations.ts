@@ -268,7 +268,7 @@ export type SetRatingMutationHookResult = ReturnType<typeof useSetRatingMutation
 export type SetRatingMutationResult = ApolloReactCommon.MutationResult<Types.SetRatingMutation>;
 export type SetRatingMutationOptions = ApolloReactCommon.BaseMutationOptions<Types.SetRatingMutation, Types.SetRatingMutationVariables>;
 export const UpdateKDramaDocument = gql`
-    mutation updateKDrama($id: ObjectId!, $kdrama: KDramaUpdateInput!) {
+    mutation UpdateKDrama($id: ObjectId!, $kdrama: KDramaUpdateInput!) {
   kDrama: updateOneKDrama(query: {_id: $id}, set: $kdrama) {
     _id
     title
