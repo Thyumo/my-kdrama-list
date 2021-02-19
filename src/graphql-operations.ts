@@ -267,3 +267,42 @@ export function useSetRatingMutation(baseOptions?: ApolloReactHooks.MutationHook
 export type SetRatingMutationHookResult = ReturnType<typeof useSetRatingMutation>;
 export type SetRatingMutationResult = ApolloReactCommon.MutationResult<Types.SetRatingMutation>;
 export type SetRatingMutationOptions = ApolloReactCommon.BaseMutationOptions<Types.SetRatingMutation, Types.SetRatingMutationVariables>;
+export const UpdateKDramaDocument = gql`
+    mutation updateKDrama($id: ObjectId!, $kdrama: KDramaUpdateInput!) {
+  kDrama: updateOneKDrama(query: {_id: $id}, set: $kdrama) {
+    _id
+    title
+    image
+    status
+    totalEpisodes
+    currentEpisode
+    rating
+  }
+}
+    `;
+export type UpdateKDramaMutationFn = ApolloReactCommon.MutationFunction<Types.UpdateKDramaMutation, Types.UpdateKDramaMutationVariables>;
+
+/**
+ * __useUpdateKDramaMutation__
+ *
+ * To run a mutation, you first call `useUpdateKDramaMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateKDramaMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateKDramaMutation, { data, loading, error }] = useUpdateKDramaMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      kdrama: // value for 'kdrama'
+ *   },
+ * });
+ */
+export function useUpdateKDramaMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.UpdateKDramaMutation, Types.UpdateKDramaMutationVariables>) {
+        return ApolloReactHooks.useMutation<Types.UpdateKDramaMutation, Types.UpdateKDramaMutationVariables>(UpdateKDramaDocument, baseOptions);
+      }
+export type UpdateKDramaMutationHookResult = ReturnType<typeof useUpdateKDramaMutation>;
+export type UpdateKDramaMutationResult = ApolloReactCommon.MutationResult<Types.UpdateKDramaMutation>;
+export type UpdateKDramaMutationOptions = ApolloReactCommon.BaseMutationOptions<Types.UpdateKDramaMutation, Types.UpdateKDramaMutationVariables>;

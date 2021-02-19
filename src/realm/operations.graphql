@@ -81,3 +81,15 @@ mutation SetRating($id: ObjectId!, $rating: Float!) {
     rating
   }
 }
+
+mutation updateKDrama($id: ObjectId!, $kdrama: KDramaUpdateInput!) {
+  kDrama: updateOneKDrama(query: {_id: $id}, set: $kdrama) {
+    _id
+    title
+    image
+    status
+    totalEpisodes
+    currentEpisode
+    rating
+  }
+}

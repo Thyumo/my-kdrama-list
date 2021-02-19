@@ -432,3 +432,17 @@ export type SetRatingMutation = (
     & Pick<KDrama, '_id' | 'title' | 'image' | 'status' | 'totalEpisodes' | 'currentEpisode' | 'rating'>
   )> }
 );
+
+export type UpdateKDramaMutationVariables = Exact<{
+  id: Scalars['ObjectId'];
+  kdrama: KDramaUpdateInput;
+}>;
+
+
+export type UpdateKDramaMutation = (
+  { __typename?: 'Mutation' }
+  & { kDrama?: Maybe<(
+    { __typename?: 'KDrama' }
+    & Pick<KDrama, '_id' | 'title' | 'image' | 'status' | 'totalEpisodes' | 'currentEpisode' | 'rating'>
+  )> }
+);
