@@ -29,3 +29,7 @@ This is a personal project to try out MongoDB Realm and to try out different thi
 
 - Change site icon
 - Add editing behavior
+
+#### 1.4.1
+
+- Fix form reset when exiting without submitting (delete or click outside)

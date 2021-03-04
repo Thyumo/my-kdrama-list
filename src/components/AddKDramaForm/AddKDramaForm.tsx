@@ -17,7 +17,7 @@ import { KDramaInsertInput, KDrama, KDramaUpdateInput } from "../../types";
 
 interface Props {
   isOpen: boolean;
-  handleClose: () => void;
+  closeModal: () => void;
   addKDrama: (data: KDramaInsertInput) => void;
   editMode?: boolean;
   editedKDrama?: KDrama;
@@ -33,7 +33,7 @@ interface FormErrors {
 
 const AddKDramaForm: React.FC<Props> = ({
   isOpen,
-  handleClose,
+  closeModal,
   addKDrama,
   editMode,
   editedKDrama,
@@ -96,6 +96,14 @@ const AddKDramaForm: React.FC<Props> = ({
     return isValid;
   };
 
+  const handleClose = () => {
+    setStatus(STATUSES.PLANNED);
+    setTitle("");
+    setImage("");
+    setTotalEpisodes(0);
+    closeModal()
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
@@ -105,12 +113,13 @@ const AddKDramaForm: React.FC<Props> = ({
         addKDrama(inputData);
       }
       handleClose();
-      setStatus(STATUSES.PLANNED);
-      setTitle("");
-      setImage("");
-      setTotalEpisodes(0);
     }
   };
+
+  const handleDelete = () => {
+    handleClose();
+    deleteKDrama();
+  }
 
   useEffect(() => {
     switch (status) {
@@ -182,7 +191,7 @@ const AddKDramaForm: React.FC<Props> = ({
               {editMode ? "Edit" : "Add"}
             </Button>
             {editMode && (
-              <Button onClick={deleteKDrama} color="primary" variant="outlined">
+              <Button onClick={handleDelete} color="primary" variant="outlined">
                 Delete
               </Button>
             )}

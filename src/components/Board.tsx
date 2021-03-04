@@ -239,7 +239,7 @@ const Board: React.FC = () => {
       <AddKDramaForm
         addKDrama={handleAdd}
         updateKDrama={handleUpdate}
-        handleClose={handleClose}
+        closeModal={handleClose}
         isOpen={isFormOpen}
         editMode={isEdit}
         editedKDrama={isEdit ? displayedKDrama : undefined}
