@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { CardContent, Button, Typography } from "@material-ui/core";
 
-import {
-  CardImage,
-  StyledCard,
-  PaddedCardActions
-} from "./styled";
-import StyledRating from '../shared/StyledRating';
+import { CardImage, StyledCard, PaddedCardActions } from "./styled";
+import StyledRating from "../shared/StyledRating";
 
 import { KDrama } from "../../types";
 import { STATUSES, ACTIONS_TEXT, STATUS_TEXT } from "../../Constants";
@@ -46,7 +42,11 @@ const MainCard: React.FC<Props> = ({
     if (kDrama.status === STATUSES.PLANNED) {
       handleStart();
     } else {
-      setEpisodes(kDrama._id, (kDrama.currentEpisode || 0) + 1);
+      const newCurrentEpisode = (kDrama.currentEpisode || 0) + 1;
+      setEpisodes(kDrama._id, newCurrentEpisode);
+      if (newCurrentEpisode === kDrama.totalEpisodes) {
+        setStatus(kDrama._id, STATUSES.COMPLETED);
+      }
     }
   };
 
