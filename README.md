@@ -33,3 +33,7 @@ This is a personal project to try out MongoDB Realm and to try out different thi
 #### 1.4.1
 
 - Fix form reset when exiting without submitting (delete or click outside)
+
+#### 1.4.2
+
+- Fix status update when reaching last episode
