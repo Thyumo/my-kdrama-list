@@ -1,6 +1,7 @@
 ## Bugs
 - Check page on delete ?
 - Close modal on delete
+- Wrong current episode in edit form
 
 ## Improvements / Refactoring
 - Use Redux
