@@ -2,6 +2,7 @@
 - Check page on delete ?
 - Close modal on delete
 - Wrong current episode in edit form
+- Close settings on finish edit
 
 ## Improvements / Refactoring
 - Use Redux
