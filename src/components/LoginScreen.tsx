@@ -65,9 +65,9 @@ const LoginScreen: React.FC = () => {
   const handleLogin = async () => {
     setError((e) => ({ ...e, password: undefined }));
     try {
-      return await app.logIn(email, password);
+      return app.logIn(email, password);
     } catch (err) {
-      handleAuthenticationError(err);
+      handleAuthenticationError(err as Error);
     }
   };
 
