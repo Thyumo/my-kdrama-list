@@ -12,7 +12,10 @@ import {
 
 import { StyledButtonGroup } from "./styled";
 
+import { throwError } from "../../utils";
 import { STATUSES } from "../../Constants";
+
+import { useUpdateKDramaMutation } from "../../graphql-operations";
 import { KDramaInsertInput, KDrama, KDramaUpdateInput } from "../../types";
 
 interface Props {
@@ -21,7 +24,9 @@ interface Props {
   addKDrama: (data: KDramaInsertInput) => void;
   editMode?: boolean;
   editedKDrama?: KDrama;
-  updateKDrama: (data: KDramaUpdateInput) => void;
+  resetKDramaList: () => void;
+  setDisplayedKDrama: (kDrama: KDrama) => void;
+  updateKDramaInList: (updatedKDrama: KDrama) => void;
   deleteKDrama: () => void;
 }
 
@@ -37,7 +42,9 @@ const AddKDramaForm: React.FC<Props> = ({
   addKDrama,
   editMode,
   editedKDrama,
-  updateKDrama,
+  resetKDramaList,
+  setDisplayedKDrama,
+  updateKDramaInList,
   deleteKDrama,
 }) => {
   const [status, setStatus] = useState<string>(STATUSES.PLANNED);
@@ -46,6 +53,8 @@ const AddKDramaForm: React.FC<Props> = ({
   const [totalEpisodes, setTotalEpisodes] = useState<number>(0);
   const [currentEpisode, setCurrentEpisode] = useState<number>(0);
   const [errors, setErrors] = useState<FormErrors>();
+
+  const [updateKDramaMutation] = useUpdateKDramaMutation();
 
   useEffect(() => {
     if (editMode) {
@@ -101,14 +110,28 @@ const AddKDramaForm: React.FC<Props> = ({
     setTitle("");
     setImage("");
     setTotalEpisodes(0);
-    closeModal()
-  }
+    closeModal();
+  };
+
+  const updateKDrama = async (data: KDramaUpdateInput) => {
+    try {
+      const result = await updateKDramaMutation({
+        variables: { id: editedKDrama?._id, kDrama: data },
+      });
+      const updatedKDrama = result.data?.kDrama as KDrama;
+      setDisplayedKDrama(updatedKDrama);
+      updateKDramaInList(updatedKDrama);
+    } catch (err) {
+      resetKDramaList();
+      throwError(err, "Couldn't update KDrama");
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
       if (editMode) {
-        updateKDrama(inputData)
+        updateKDrama(inputData);
       } else {
         addKDrama(inputData);
       }
@@ -119,7 +142,7 @@ const AddKDramaForm: React.FC<Props> = ({
   const handleDelete = () => {
     handleClose();
     deleteKDrama();
-  }
+  };
 
   useEffect(() => {
     switch (status) {
