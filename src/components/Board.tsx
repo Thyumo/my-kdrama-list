@@ -9,7 +9,6 @@ import {
   useSetEpisodesMutation,
   useSetRatingMutation,
   useDeleteKDramaMutation,
-  useUpdateKDramaMutation,
 } from "../graphql-operations";
 
 import KDramaList from "./DramaList/DramaList";
@@ -22,7 +21,6 @@ import {
   GetAllKDramasQuery,
   KDrama,
   KDramaInsertInput,
-  KDramaUpdateInput,
 } from "../types";
 import { PAGE_SIZE, STATUSES } from "../Constants";
 import { replaceKDrama } from "../utils";
@@ -52,7 +50,6 @@ const Board: React.FC = () => {
 
   const { logOut } = useRealmApp();
   const [addKDramaMutation] = useAddKDramaMutation();
-  const [updateKDramaMutation] = useUpdateKDramaMutation();
   const [deleteKDramaMutation] = useDeleteKDramaMutation();
   const [setKDramaStatusMutation] = useSetKDramaStatusMutation();
   const [setEpisodesMutation] = useSetEpisodesMutation();
@@ -80,6 +77,14 @@ const Board: React.FC = () => {
     setIsEdit(false);
   };
 
+  const resetKDramaList = () => {
+    setKDramas(kDramas);
+  };
+
+  const updateKDramaInList = (updatedKDrama: KDrama) => {
+    setKDramas(replaceKDrama(updatedKDrama, kDramas));
+  };
+
   const handleAdd = async (data: KDramaInsertInput) => {
     const currentKDramas = [...kDramas];
     try {
@@ -89,21 +94,6 @@ const Board: React.FC = () => {
     } catch (err) {
       setKDramas(currentKDramas);
       throw new Error("Couldn't add new KDrama");
-    }
-  };
-
-  const handleUpdate = async (data: KDramaUpdateInput) => {
-    const currentKDramas = [...kDramas];
-    try {
-      const result = await updateKDramaMutation({
-        variables: { id: displayedKDrama?._id, kDrama: data },
-      });
-      const updatedKDrama = result.data?.kDrama as KDrama;
-      setDisplayedKDrama(updatedKDrama);
-      setKDramas(replaceKDrama(updatedKDrama, currentKDramas));
-    } catch (err) {
-      setKDramas(currentKDramas);
-      throw new Error("Couldn't update KDrama");
     }
   };
 
@@ -237,13 +227,15 @@ const Board: React.FC = () => {
         logOut={logOut}
       />
       <KDramaForm
+        resetKDramaList={resetKDramaList}
+        setDisplayedKDrama={setDisplayedKDrama}
         addKDrama={handleAdd}
-        updateKDrama={handleUpdate}
+        updateKDramaInList={updateKDramaInList}
+        deleteKDrama={handleDelete}
         closeModal={handleClose}
         isOpen={isFormOpen}
         editMode={isEdit}
         editedKDrama={isEdit ? displayedKDrama : undefined}
-        deleteKDrama={handleDelete}
       />
       <Ranking
         handleClose={() => setIsRankingOpen(false)}
