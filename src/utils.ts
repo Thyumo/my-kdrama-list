@@ -12,4 +12,14 @@ const replaceKDrama = (newKDrama: KDrama, kDramas: KDrama[]) => {
   return updatedKDramas;
 };
 
-export { replaceKDrama };
+const throwError = (err: unknown, message: string) => {
+  if (err instanceof Error) {
+    throw new Error(`${message}: ${err.message}`);
+  }
+  throw err;
+}
+
+export {
+  replaceKDrama,
+  throwError,
+};
