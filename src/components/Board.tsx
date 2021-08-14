@@ -15,7 +15,7 @@ import {
 import KDramaList from "./DramaList/DramaList";
 import MainCard from "./MainCard/MainCard";
 import FabGroup from "./FabGroup/FabGroup";
-import AddKDramaForm from "./AddKDramaForm/AddKDramaForm";
+import KDramaForm from "./KDramaForm/kDramaForm";
 import Ranking from "./Ranking";
 
 import {
@@ -236,7 +236,7 @@ const Board: React.FC = () => {
         resetPage={() => setCurrentListPage(0)}
         logOut={logOut}
       />
-      <AddKDramaForm
+      <KDramaForm
         addKDrama={handleAdd}
         updateKDrama={handleUpdate}
         closeModal={handleClose}
