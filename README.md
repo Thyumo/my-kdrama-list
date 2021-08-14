@@ -37,3 +37,8 @@ This is a personal project to try out MongoDB Realm and to try out different thi
 #### 1.4.2
 
 - Fix status update when reaching last episode
+
+### 1.4.3
+
+- Add hidden status
+- Refactor status select menu
