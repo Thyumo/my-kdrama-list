@@ -12,6 +12,17 @@ const replaceKDrama = (newKDrama: KDrama, kDramas: KDrama[]) => {
   return updatedKDramas;
 };
 
+const findDefaultDisplayed = (kDramas: KDrama[]) => {
+  return kDramas.find(({ status }) => status === STATUSES.WATCHING) ||
+  kDramas.find(({ status }) => status === STATUSES.PLANNED)
+}
+
+const computePageAfterRemove = (nbKDramas: number, currentPage: number) => {
+  return nbKDramas % PAGE_SIZE === 1
+    ? currentPage - 1
+    : currentPage;
+}
+
 const throwError = (err: unknown, message: string) => {
   if (err instanceof Error) {
     throw new Error(`${message}: ${err.message}`);
@@ -20,6 +31,8 @@ const throwError = (err: unknown, message: string) => {
 }
 
 export {
+  computePageAfterRemove,
+  findDefaultDisplayed,
   replaceKDrama,
   throwError,
 };
