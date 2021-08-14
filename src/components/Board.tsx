@@ -4,7 +4,6 @@ import { Typography, CircularProgress, Grid, styled } from "@material-ui/core";
 import { useRealmApp } from "../realm/RealmApp";
 import {
   useGetAllKDramasQuery,
-  useAddKDramaMutation,
   useSetKDramaStatusMutation,
   useSetEpisodesMutation,
   useSetRatingMutation,
@@ -20,7 +19,6 @@ import Ranking from "./Ranking";
 import {
   GetAllKDramasQuery,
   KDrama,
-  KDramaInsertInput,
 } from "../types";
 import { PAGE_SIZE, STATUSES } from "../Constants";
 import { replaceKDrama } from "../utils";
@@ -49,7 +47,6 @@ const Board: React.FC = () => {
   );
 
   const { logOut } = useRealmApp();
-  const [addKDramaMutation] = useAddKDramaMutation();
   const [deleteKDramaMutation] = useDeleteKDramaMutation();
   const [setKDramaStatusMutation] = useSetKDramaStatusMutation();
   const [setEpisodesMutation] = useSetEpisodesMutation();
@@ -81,20 +78,12 @@ const Board: React.FC = () => {
     setKDramas(kDramas);
   };
 
-  const updateKDramaInList = (updatedKDrama: KDrama) => {
-    setKDramas(replaceKDrama(updatedKDrama, kDramas));
+  const addKDramaToList = (newKDrama: KDrama) => {
+    setKDramas([...kDramas, newKDrama]);
   };
 
-  const handleAdd = async (data: KDramaInsertInput) => {
-    const currentKDramas = [...kDramas];
-    try {
-      const result = await addKDramaMutation({ variables: { kDrama: data } });
-      const newKDrama = result.data?.kDrama as KDrama;
-      setKDramas([...currentKDramas, newKDrama]);
-    } catch (err) {
-      setKDramas(currentKDramas);
-      throw new Error("Couldn't add new KDrama");
-    }
+  const updateKDramaInList = (updatedKDrama: KDrama) => {
+    setKDramas(replaceKDrama(updatedKDrama, kDramas));
   };
 
   const handleDelete = async () => {
@@ -229,7 +218,7 @@ const Board: React.FC = () => {
       <KDramaForm
         resetKDramaList={resetKDramaList}
         setDisplayedKDrama={setDisplayedKDrama}
-        addKDrama={handleAdd}
+        addKDramaToList={addKDramaToList}
         updateKDramaInList={updateKDramaInList}
         deleteKDrama={handleDelete}
         closeModal={handleClose}

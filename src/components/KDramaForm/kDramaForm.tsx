@@ -15,17 +15,17 @@ import { StyledButtonGroup } from "./styled";
 import { throwError } from "../../utils";
 import { STATUSES } from "../../Constants";
 
-import { useUpdateKDramaMutation } from "../../graphql-operations";
+import { useUpdateKDramaMutation, useAddKDramaMutation } from "../../graphql-operations";
 import { KDramaInsertInput, KDrama, KDramaUpdateInput } from "../../types";
 
 interface Props {
   isOpen: boolean;
   closeModal: () => void;
-  addKDrama: (data: KDramaInsertInput) => void;
   editMode?: boolean;
   editedKDrama?: KDrama;
   resetKDramaList: () => void;
   setDisplayedKDrama: (kDrama: KDrama) => void;
+  addKDramaToList: (newkDrama: KDrama) => void;
   updateKDramaInList: (updatedKDrama: KDrama) => void;
   deleteKDrama: () => void;
 }
@@ -39,11 +39,11 @@ interface FormErrors {
 const AddKDramaForm: React.FC<Props> = ({
   isOpen,
   closeModal,
-  addKDrama,
   editMode,
   editedKDrama,
   resetKDramaList,
   setDisplayedKDrama,
+  addKDramaToList,
   updateKDramaInList,
   deleteKDrama,
 }) => {
@@ -55,6 +55,7 @@ const AddKDramaForm: React.FC<Props> = ({
   const [errors, setErrors] = useState<FormErrors>();
 
   const [updateKDramaMutation] = useUpdateKDramaMutation();
+  const [addKDramaMutation] = useAddKDramaMutation();
 
   useEffect(() => {
     if (editMode) {
@@ -112,6 +113,17 @@ const AddKDramaForm: React.FC<Props> = ({
     setTotalEpisodes(0);
     closeModal();
   };
+
+  const addKDrama = async (data: KDramaInsertInput) => {
+    try {
+      const result = await addKDramaMutation({ variables: { kDrama: data } });
+      const newKDrama = result.data?.kDrama as KDrama;
+      addKDramaToList(newKDrama);
+    } catch (err) {
+      resetKDramaList();
+      throwError(err, "Couldn't add KDrama");
+    }
+  }
 
   const updateKDrama = async (data: KDramaUpdateInput) => {
     try {
