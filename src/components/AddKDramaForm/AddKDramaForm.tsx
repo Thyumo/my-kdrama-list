@@ -12,7 +12,7 @@ import {
 
 import { StyledButtonGroup } from "./styled";
 
-import { STATUSES } from "../../Constants";
+import { STATUSES, STATUS_TEXT } from "../../Constants";
 import { KDramaInsertInput, KDrama, KDramaUpdateInput } from "../../types";
 
 interface Props {
@@ -101,14 +101,14 @@ const AddKDramaForm: React.FC<Props> = ({
     setTitle("");
     setImage("");
     setTotalEpisodes(0);
-    closeModal()
-  }
+    closeModal();
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
       if (editMode) {
-        updateKDrama(inputData)
+        updateKDrama(inputData);
       } else {
         addKDrama(inputData);
       }
@@ -119,7 +119,7 @@ const AddKDramaForm: React.FC<Props> = ({
   const handleDelete = () => {
     handleClose();
     deleteKDrama();
-  }
+  };
 
   useEffect(() => {
     switch (status) {
@@ -164,9 +164,9 @@ const AddKDramaForm: React.FC<Props> = ({
             required
             style={{ margin: "21px 0px 4px 0px" }}
           >
-            <MenuItem value={STATUSES.WATCHING}>Watching</MenuItem>
-            <MenuItem value={STATUSES.COMPLETED}>Completed</MenuItem>
-            <MenuItem value={STATUSES.PLANNED}>Planned</MenuItem>
+            {Object.values(STATUSES).map((status) => (
+              <MenuItem value={status}>{STATUS_TEXT[status]}</MenuItem>
+            ))}
           </Select>
           <TextField
             value={totalEpisodes}
