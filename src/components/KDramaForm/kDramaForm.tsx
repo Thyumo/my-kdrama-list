@@ -15,7 +15,7 @@ import { StyledButtonGroup } from "./styled";
 import { throwError } from "../../utils";
 import { STATUSES, STATUS_TEXT } from "../../Constants";
 
-import { useUpdateKDramaMutation, useAddKDramaMutation } from "../../graphql-operations";
+import { useUpdateKDramaMutation, useAddKDramaMutation, useDeleteKDramaMutation } from "../../graphql-operations";
 import { KDramaInsertInput, KDrama, KDramaUpdateInput } from "../../types";
 
 interface Props {
@@ -27,7 +27,7 @@ interface Props {
   setDisplayedKDrama: (kDrama: KDrama) => void;
   addKDramaToList: (newkDrama: KDrama) => void;
   updateKDramaInList: (updatedKDrama: KDrama) => void;
-  deleteKDrama: () => void;
+  removeKDramaFromList: (removedKDrama: KDrama) => void;
 }
 
 interface FormErrors {
@@ -45,7 +45,7 @@ const AddKDramaForm: React.FC<Props> = ({
   setDisplayedKDrama,
   addKDramaToList,
   updateKDramaInList,
-  deleteKDrama,
+  removeKDramaFromList,
 }) => {
   const [status, setStatus] = useState<string>(STATUSES.PLANNED);
   const [title, setTitle] = useState<string>("");
@@ -56,6 +56,7 @@ const AddKDramaForm: React.FC<Props> = ({
 
   const [updateKDramaMutation] = useUpdateKDramaMutation();
   const [addKDramaMutation] = useAddKDramaMutation();
+  const [deleteKDramaMutation] = useDeleteKDramaMutation();
 
   useEffect(() => {
     if (editMode) {
@@ -139,6 +140,19 @@ const AddKDramaForm: React.FC<Props> = ({
       throwError(err, "Couldn't update KDrama");
     }
   };
+
+  const deleteKDrama = async () => {
+    try {
+      const result = await deleteKDramaMutation({
+        variables: { id: editedKDrama?._id },
+      });
+      const deleted = result.data?.kDrama as KDrama;
+      removeKDramaFromList(deleted);
+    } catch (err) {
+      resetKDramaList();
+      throwError(err, "Couldn't delete KDrama")
+    }
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

@@ -7,7 +7,6 @@ import {
   useSetKDramaStatusMutation,
   useSetEpisodesMutation,
   useSetRatingMutation,
-  useDeleteKDramaMutation,
 } from "../graphql-operations";
 
 import KDramaList from "./DramaList/DramaList";
@@ -21,7 +20,7 @@ import {
   KDrama,
 } from "../types";
 import { PAGE_SIZE, STATUSES } from "../Constants";
-import { replaceKDrama } from "../utils";
+import { findDefaultDisplayed, replaceKDrama } from "../utils";
 
 const StyledBackgroundGrid = styled(Grid)({
   background:
@@ -47,7 +46,6 @@ const Board: React.FC = () => {
   );
 
   const { logOut } = useRealmApp();
-  const [deleteKDramaMutation] = useDeleteKDramaMutation();
   const [setKDramaStatusMutation] = useSetKDramaStatusMutation();
   const [setEpisodesMutation] = useSetEpisodesMutation();
   const [setRatingMutation] = useSetRatingMutation();
@@ -86,28 +84,15 @@ const Board: React.FC = () => {
     setKDramas(replaceKDrama(updatedKDrama, kDramas));
   };
 
-  const handleDelete = async () => {
-    const currentKDramas = [...kDramas];
+  const removeKDramaFromList = (removedKDrama: KDrama) => {
     const newListPage =
-      currentKDramas.length % PAGE_SIZE === 1
+      kDramas.length % PAGE_SIZE === 1
         ? currentListPage - 1
         : currentListPage;
-    try {
-      const result = await deleteKDramaMutation({
-        variables: { id: displayedKDrama?._id },
-      });
-      const deleted = result.data?.kDrama as KDrama;
-      setKDramas([...currentKDramas.filter(({ _id }) => _id !== deleted._id)]);
-      setDisplayedKDrama(
-        currentKDramas.find(({ status }) => status === STATUSES.WATCHING) ||
-          currentKDramas.find(({ status }) => status === STATUSES.PLANNED)
-      );
-      setCurrentListPage(newListPage);
-    } catch (err) {
-      setKDramas(currentKDramas);
-      throw new Error("Couldn't delete KDrama");
-    }
-  };
+    setKDramas([...kDramas.filter(({ _id }) => _id !== removedKDrama._id)]);
+    setDisplayedKDrama(findDefaultDisplayed(kDramas));
+    setCurrentListPage(newListPage);
+  }
 
   const setEpisodes = useCallback(
     async (id: string, current: number) => {
@@ -220,7 +205,7 @@ const Board: React.FC = () => {
         setDisplayedKDrama={setDisplayedKDrama}
         addKDramaToList={addKDramaToList}
         updateKDramaInList={updateKDramaInList}
-        deleteKDrama={handleDelete}
+        removeKDramaFromList={removeKDramaFromList}
         closeModal={handleClose}
         isOpen={isFormOpen}
         editMode={isEdit}
