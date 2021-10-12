@@ -44,6 +44,11 @@ const FabGroup: React.FC<Props> = ({
     setShowFilterList(false);
   };
 
+  const handleClickOnEdit = () => {
+    setShowSettings(false);
+    openEditForm();
+  }
+
   const toggleFilterList = () => {
     setShowFilterList(!showFilterList);
   };
@@ -100,7 +105,7 @@ const FabGroup: React.FC<Props> = ({
           <Fab
             style={{ position: "fixed", right: "240px", bottom: "80px" }}
             color="primary"
-            onClick={openEditForm}
+            onClick={handleClickOnEdit}
           >
             <EditIcon />
           </Fab>
