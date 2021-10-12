@@ -42,3 +42,9 @@ This is a personal project to try out MongoDB Realm and to try out different thi
 
 - Add hidden status
 - Refactor status select menu
+
+### 1.4.4
+
+- Reset current episode when closing the form
+- Remove auto update of current episode with status change
+- Close settings menu when opening the edit form
