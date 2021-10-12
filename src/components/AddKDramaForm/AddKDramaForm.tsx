@@ -101,6 +101,7 @@ const AddKDramaForm: React.FC<Props> = ({
     setTitle("");
     setImage("");
     setTotalEpisodes(0);
+    setCurrentEpisode(0);
     closeModal();
   };
 
