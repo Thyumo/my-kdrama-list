@@ -1,7 +1,6 @@
 ## Bugs
 - Check page on delete ?
 - Wrong current episode in edit form
-- Close settings on finish edit
 - Edit max episodes reset current episode
 
 ## Improvements / Refactoring
