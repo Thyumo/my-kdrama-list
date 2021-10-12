@@ -121,20 +121,6 @@ const AddKDramaForm: React.FC<Props> = ({
     deleteKDrama();
   };
 
-  useEffect(() => {
-    switch (status) {
-      case STATUSES.PLANNED:
-        setCurrentEpisode(0);
-        break;
-      case STATUSES.WATCHING:
-        setCurrentEpisode(1);
-        break;
-      case STATUSES.COMPLETED:
-        setCurrentEpisode(totalEpisodes);
-        break;
-    }
-  }, [status, totalEpisodes]);
-
   return (
     <Dialog fullWidth open={isOpen} onClose={handleClose}>
       <form onSubmit={handleSubmit}>
