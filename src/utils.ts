@@ -1,4 +1,5 @@
 import { KDrama } from "./types";
+import { PAGE_SIZE, STATUSES } from "./Constants";
 
 const replaceKDrama = (newKDrama: KDrama, kDramas: KDrama[]) => {
   const updatedKDramas = [...kDramas];
