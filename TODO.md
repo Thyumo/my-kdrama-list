@@ -1,7 +1,4 @@
 ## Bugs
-- Check page on delete ?
-- Wrong current episode in edit form
-- Edit max episodes reset current episode
 
 ## Improvements / Refactoring
 - Use Redux
