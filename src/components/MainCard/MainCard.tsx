@@ -9,7 +9,7 @@ import { STATUSES, ACTIONS_TEXT, STATUS_TEXT } from "../../Constants";
 
 interface Props {
   kDrama: KDrama;
-  setEpisodes: (id: string, current: number) => void;
+  setEpisodes: (current: number) => void;
   setStatus: (id: string, status: string) => void;
   setRating: (id: string, rating: number) => void;
 }
@@ -28,12 +28,12 @@ const MainCard: React.FC<Props> = ({
 
   const handleStart = () => {
     setStatus(kDrama._id, STATUSES.WATCHING);
-    setEpisodes(kDrama._id, 1);
+    setEpisodes(1);
   };
 
   const handleComplete = () => {
     setStatus(kDrama._id, STATUSES.COMPLETED);
-    setEpisodes(kDrama._id, kDrama.totalEpisodes);
+    setEpisodes(kDrama.totalEpisodes);
   };
 
   const handleIncreaseEpisodes = () => {
@@ -43,7 +43,7 @@ const MainCard: React.FC<Props> = ({
       handleStart();
     } else {
       const newCurrentEpisode = (kDrama.currentEpisode || 0) + 1;
-      setEpisodes(kDrama._id, newCurrentEpisode);
+      setEpisodes(newCurrentEpisode);
       if (newCurrentEpisode === kDrama.totalEpisodes) {
         setStatus(kDrama._id, STATUSES.COMPLETED);
       }
