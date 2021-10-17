@@ -20,7 +20,7 @@ import {
   KDrama,
 } from "../types";
 import { PAGE_SIZE, STATUSES } from "../Constants";
-import { findDefaultDisplayed, replaceKDrama } from "../utils";
+import { findDefaultDisplayed, replaceKDrama, throwError } from "../utils";
 
 const StyledBackgroundGrid = styled(Grid)({
   background:
@@ -72,17 +72,21 @@ const Board: React.FC = () => {
     setIsEdit(false);
   };
 
-  const resetKDramaList = () => {
-    setKDramas(kDramas);
-  };
+  const resetKDramaList = useCallback(
+    () => {
+      setKDramas(kDramas);
+    }, [kDramas]
+  );
 
   const addKDramaToList = (newKDrama: KDrama) => {
     setKDramas([...kDramas, newKDrama]);
   };
 
-  const updateKDramaInList = (updatedKDrama: KDrama) => {
-    setKDramas(replaceKDrama(updatedKDrama, kDramas));
-  };
+  const updateKDramaInList = useCallback(
+    (updatedKDrama: KDrama) => {
+      setKDramas(replaceKDrama(updatedKDrama, kDramas));
+    }, [kDramas]
+  );
 
   const removeKDramaFromList = (removedKDrama: KDrama) => {
     const newListPage =
@@ -95,28 +99,23 @@ const Board: React.FC = () => {
   }
 
   const setEpisodes = useCallback(
-    async (id: string, current: number) => {
-      const currentKDramas = [...kDramas];
+    async (currentEpisodes: number) => {
       try {
         setDisplayedKDrama({
           ...displayedKDrama!,
-          currentEpisode: current,
+          currentEpisode: currentEpisodes,
         });
         const result = await setEpisodesMutation({
-          variables: { id, counter: current },
+          variables: { id: displayedKDrama!._id, counter: currentEpisodes },
         });
         const updatedKDrama = result.data?.kDrama as KDrama;
-        currentKDramas[
-          currentKDramas.findIndex(({ _id }) => _id === updatedKDrama._id)
-        ] = updatedKDrama;
         setDisplayedKDrama(updatedKDrama);
-        setKDramas(currentKDramas);
+        updateKDramaInList(updatedKDrama);
       } catch (err) {
-        setKDramas(currentKDramas);
-        throw new Error("Couldn't increase episodes");
+        resetKDramaList();
+        throwError(err, "Couldn't set episodes");
       }
-    },
-    [kDramas, displayedKDrama, setEpisodesMutation, setDisplayedKDrama]
+    }, [displayedKDrama, setEpisodesMutation, updateKDramaInList, resetKDramaList]
   );
 
   const setStatus = useCallback(
