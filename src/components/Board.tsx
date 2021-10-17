@@ -137,23 +137,19 @@ const Board: React.FC = () => {
   );
 
   const setRating = useCallback(
-    async (id: string, rating: number) => {
-      const currentKDramas = [...kDramas];
+    async (rating: number) => {
       try {
         const result = await setRatingMutation({
-          variables: { id, rating },
+          variables: { id: displayedKDrama!._id, rating },
         });
         const updatedKDrama = result.data?.kDrama as KDrama;
-        currentKDramas[
-          currentKDramas.findIndex(({ _id }) => _id === updatedKDrama._id)
-        ] = updatedKDrama;
-        setKDramas(currentKDramas);
+        updateKDramaInList(updatedKDrama);
       } catch (err) {
-        setKDramas(currentKDramas);
-        throw new Error("Couldn't set status");
+        resetKDramaList();
+        throwError(err, "Couldn't set rating");
       }
     },
-    [kDramas, setRatingMutation]
+    [displayedKDrama, setRatingMutation, updateKDramaInList, resetKDramaList]
   );
 
   const renderCard = useCallback(() => {

@@ -11,7 +11,7 @@ interface Props {
   kDrama: KDrama;
   setEpisodes: (current: number) => void;
   setStatus: (status: string) => void;
-  setRating: (id: string, rating: number) => void;
+  setRating: (rating: number) => void;
 }
 
 const MainCard: React.FC<Props> = ({
@@ -74,7 +74,7 @@ const MainCard: React.FC<Props> = ({
             value={localRating}
             onChange={(e, value) => {
               setLocalRating(value as number);
-              setRating(kDrama._id, value as number);
+              setRating(value as number);
             }}
           />
           <div>
